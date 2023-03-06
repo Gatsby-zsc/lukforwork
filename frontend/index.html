@@ -1,28 +1,65 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>LurkForWork</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- You can add your styles and scripts here -->
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/provided.css" />
-</head>
-<body>
-    <!-- This is an example app structure, you can modify this as much as you choose --> 
-    <header>
-        <h1>lurkforwork.com</h1>
-        <nav>
-            <li class="nav-item">Item</li>
-            <li class="nav-item">Item</li>
-        </nav>
-    </header>
-    <main role="main">
-        <!-- app goes here --> 
-    </main>
-    <footer>
-        <p>&copy; lurkforwork.com 2022</p>
-    </footer>
-    <script type="module" src="src/main.js"></script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>LurkForWork</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- You can add your styles and scripts here -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="styles/global.css"
+        />
+    </head>
+    <body>
+        <div class="login-interface hidden">
+            <header class="Linkedin-logo">
+                <h2>Linked <span>out</span></h2>
+            </header>
+            <main class="login-window">
+                <div class="window">
+                    <div class="header-content">
+                        <h1>Sign in</h1>
+                        <p>Stay updated on your professional world</p>
+                    </div>
+                    <form>
+                        <div class="email">
+                            <input
+                                type="text"
+                                id="email"
+                                placeholder="Email or Phone"
+                            />
+                        </div>
+
+                        <div class="password">
+                            <input
+                                type="text"
+                                id="password"
+                                placeholder="Password"
+                            />
+                        </div>
+
+                        <div class="sign-in">
+                            <button class="sign-in-button">Sign in</button>
+                        </div>
+                    </form>
+
+                    <div class="Or-join">
+                        <hr />
+                        <span>or</span>
+                        <hr />
+                    </div>
+
+                    <div class="join-now">
+                        New to LinkedOut?
+                        <button class="registration">Join now</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script type="module" src="src/main.js"></script>
+    </body>
 </html>
