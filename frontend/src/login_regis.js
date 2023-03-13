@@ -1,5 +1,10 @@
 export function login() {
-    // need to add parameters for user email and password
+    // need to be modified later for fetch
+    const eamilField = document.getElementById("email").value;
+    console.log(eamilField);
+    const passwordField = document.getElementById("password").value;
+    console.log(passwordField);
+
     fetch(`http://localhost:5005/auth/login`, {
         method: "POST",
         headers: {
@@ -8,6 +13,8 @@ export function login() {
         body: JSON.stringify({
             email: "betty@email.com",
             password: "cardigan",
+            // email: eamilField,
+            // password: passwordField,
         }),
     })
         .then((res) => {
@@ -20,7 +27,9 @@ export function login() {
             console.log(data.userId);
         })
         .catch(() => {
-            console.log("catch an error");
+            errorPopup(
+                "Your email and password don't match!!! Please try again"
+            );
         });
 }
 
@@ -28,6 +37,14 @@ export function registration() {
     console.log("hello world");
 }
 
-export function errorPopup() {
-    console.log("error happens");
+export function errorPopup(errorMessage = "error happens") {
+    // for testing this function, please modify the predefined value in email/password field
+    document.getElementById("error-message").textContent = errorMessage;
+    const errorBox = document.getElementById("error-box");
+    errorBox.classList.remove("hidden");
+    const closeButton = document.getElementById("close-error-window");
+    closeButton.addEventListener("click", () => {
+        errorBox.classList.add("hidden");
+    });
+    // resume from error
 }

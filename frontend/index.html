@@ -14,7 +14,7 @@
         />
     </head>
     <body>
-        <div class="login-interface hidden">
+        <div class="login-interface">
             <header class="Linkedin-logo">
                 <h2>Linked <span>out</span></h2>
             </header>
@@ -58,7 +58,10 @@
                 </div>
             </main>
         </div>
-
+        <div id="error-box" class="hidden">
+            <p id="error-message"></p>
+            <button id="close-error-window">close this window</button>
+        </div>
         <script type="module" src="src/main.js"></script>
     </body>
 </html>

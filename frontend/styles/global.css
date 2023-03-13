@@ -44,10 +44,6 @@ body {
     font-size: 12pt;
 }
 
-#email:focus {
-    border-color: #0ac238;
-}
-
 .Linkedin-logo {
     margin-left: 56px;
     margin-bottom: 20px;
@@ -116,4 +112,23 @@ hr {
     height: 100%;
     border-radius: 28px;
     text-decoration: underline;
+}
+
+#error-box {
+    width: 20vw;
+    height: auto;
+    position: absolute;
+    top: 30vh;
+    left: 40vw;
+    border: 5px solid #0a66c2;
+    border-radius: 15%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
 }
