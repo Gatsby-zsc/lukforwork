@@ -1,67 +1,112 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>LurkForWork</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- You can add your styles and scripts here -->
-        <link
-            rel="stylesheet"
-            type="text/css"
-            media="screen"
-            href="styles/global.css"
-        />
-    </head>
-    <body>
-        <div class="login-interface">
-            <header class="Linkedin-logo">
-                <h2>Linked <span>out</span></h2>
-            </header>
-            <main class="login-window">
-                <div class="window">
-                    <div class="header-content">
-                        <h1>Sign in</h1>
-                        <p>Stay updated on your professional world</p>
-                    </div>
-
-                    <div class="email">
-                        <input
-                            type="text"
-                            id="email"
-                            placeholder="Email or Phone"
-                        />
-                    </div>
-
-                    <div class="password">
-                        <input
-                            type="text"
-                            id="password"
-                            placeholder="Password"
-                        />
-                    </div>
-
-                    <div class="sign-in">
-                        <button id="sign-in-button">Sign in</button>
-                    </div>
-
-                    <div class="Or-join">
-                        <hr />
-                        <span>or</span>
-                        <hr />
-                    </div>
-
-                    <div class="join-now">
-                        New to LinkedOut?
-                        <button class="registration">Join now</button>
-                    </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>LurkForWork</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- You can add your styles and scripts here -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="styles/global.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="LurkForWork-logo">LurkFor<span>Work</span></div>
+      </header>
+      <div id="login-interface">
+        <main class="card-layout">
+          <div class="window">
+            <div>
+              <div class="header-content">
+                <h1>Sign in</h1>
+                <p>Stay updated on your professional world</p>
+              </div>
+              <form>
+                <div class="email">
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Email or Phone"
+                  />
+                  <!-- <label class="label-for-email" for="email"
+                    >Email or Phone</label
+                  > -->
                 </div>
-            </main>
-        </div>
-        <div id="error-box" class="hidden">
-            <p id="error-message"></p>
-            <button id="close-error-window">close this window</button>
-        </div>
-        <script type="module" src="src/main.js"></script>
-    </body>
+
+                <div class="password">
+                  <input
+                    type="text"
+                    id="password"
+                    placeholder="Password"
+                    name="password"
+                  />
+                </div>
+
+                <div class="sign-in">
+                  <input type="submit" id="sign-in-button" value="Sign in" />
+                </div>
+              </form>
+              <hr class="hr" />
+            </div>
+          </div>
+          <div class="join-switch">
+            New to LurkForWork?
+            <button class="switch-btn join-switch" id="switch-join-btn">
+              Join now
+            </button>
+          </div>
+        </main>
+      </div>
+
+      <!-- register hidden -->
+      <div id="registration-interface" class="hidden">
+        <main class="card-layout">
+          <div class="window">
+            <div class="header-content">
+              <h1>Register now</h1>
+              <p>Make the most of your professional life</p>
+            </div>
+            <form>
+              <div class="email">
+                <input type="text" id="email" placeholder="Email or Phone" />
+              </div>
+              <div>
+                <input type="text" />
+              </div>
+              <div class="password">
+                <input type="text" id="password" placeholder="Password" />
+              </div>
+              <div>
+                <input type="text" id="password-confirm" />
+              </div>
+
+              <div class="sign-in">
+                <input type="submit" id="register-button" value="Join in now" />
+              </div>
+            </form>
+
+            <hr class="hr" />
+          </div>
+          <div class="join-switch">
+            Already on LurkForWork?
+            <button class="switch-btn join-switch" id="switch-sign-btn">
+              Sign in
+            </button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <div id="error-box" class="hidden">
+      <p id="error-message"></p>
+      <button id="close-error-window">close this window</button>
+    </div>
+    <script type="module" src="src/main.js"></script>
+  </body>
 </html>
