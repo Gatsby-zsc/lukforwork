@@ -44,6 +44,10 @@ body {
     font-size: 12pt;
 }
 
+#email:focus {
+    border-color: #0ac238;
+}
+
 .Linkedin-logo {
     margin-left: 56px;
     margin-bottom: 20px;
@@ -78,7 +82,7 @@ hr {
     margin: 20px 0;
 }
 
-.sign-in-button {
+#sign-in-button {
     background-color: #0a66c2;
     border-radius: 25px;
     padding: 15px 20px;
@@ -103,6 +107,7 @@ hr {
     background-color: #ffffff;
     color: #0a66c2;
     font-size: 1.2rem;
+    transition-duration: 0.167s;
 }
 
 .registration:hover {
