@@ -1,4 +1,5 @@
 import { fetch_request } from "./fetch.js";
+import { errorPopup } from "./error_handle.js";
 
 export function login() {
     // need to be modified later for fetch
@@ -7,33 +8,19 @@ export function login() {
     const passwordField = document.getElementById("password").value;
     console.log(passwordField);
 
-    fetch(`http://localhost:5005/auth/login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-            email: "betty@email.com",
-            password: "cardigan",
-            // email: eamilField,
-            // password: passwordField,
-        }),
-    })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then((data) => {
-            // process user data
-            console.log(data.token);
-            console.log(data.userId);
-        })
-        .catch(() => {
-            errorPopup(
-                "Your email and password don't match!!! Please try again"
-            );
-        });
+    const successLogin = (data) => {
+        console.log(data.token);
+        console.log(data.userId);
+        document.getElementById("login-interface").classList.add("hidden");
+    };
+
+    fetch_request(
+        "auth/login",
+        "POST",
+        { email: "betty@email.com", password: "cardigan" },
+        successLogin,
+        "Your email and password don't match!!! Please try again"
+    );
 }
 
 export function registration() {
@@ -46,42 +33,19 @@ export function registration() {
         return;
     }
 
-    fetch(`http://localhost:5005/auth/register`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-            email: userEmail,
-            password: userPassword,
-            name: userName,
-        }),
-    })
-        .then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-        })
-        .then((data) => {
-            // process user data
-            console.log(data.token);
-            console.log(data.userId);
-        })
-        .catch(() => {
-            errorPopup("Invalid input");
-        });
-}
+    const successRegister = (data) => {
+        console.log(data.token);
+        console.log(data.userId);
+        document.getElementById("login-interface").classList.add("hidden");
+    };
 
-export function errorPopup(errorMessage = "error happens") {
-    // for testing this function, please modify the predefined value in email/password field
-    document.getElementById("error-message").textContent = errorMessage;
-    const errorBox = document.getElementById("error-box");
-    errorBox.classList.remove("hidden");
-    const closeButton = document.getElementById("close-error-window");
-    closeButton.addEventListener("click", () => {
-        errorBox.classList.add("hidden");
-    });
-    // resume from error
+    fetch_request(
+        "auth/register",
+        "POST",
+        { email: userEmail, password: userPassword, name: userName },
+        successRegister,
+        "Invalid input"
+    );
 }
 
 // sign in switch register

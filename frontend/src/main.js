@@ -2,7 +2,7 @@ import { BACKEND_PORT } from "./config.js";
 // A helper you may want to use when uploading new images to the server.
 import { fileToDataUrl } from "./helpers.js";
 
-import { login, registration, errorPopup, swap } from "./login_regis.js";
+import { login, registration, swap } from "./login_regis.js";
 
 const signInButton = document.getElementById("sign-in-button");
 
