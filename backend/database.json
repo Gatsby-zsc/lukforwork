@@ -1,41 +1,96 @@
 {
   "users": {
-    "30997": {
+    "52842": {
+      "email": "james@email.com",
+      "name": "James",
+      "password": "betty",
+      "watcheeUserIds": {
+        "61409": true,
+        "93797": true
+      }
+    },
+    "61409": {
       "email": "betty@email.com",
       "name": "Betty",
       "password": "cardigan",
       "watcheeUserIds": {}
     },
-    "46604": {
+    "93797": {
       "email": "augustine@email.com",
       "name": "Augustine",
       "password": "august",
       "watcheeUserIds": {
-        "30997": true
-      }
-    },
-    "91193": {
-      "email": "james@email.com",
-      "name": "James",
-      "password": "betty",
-      "watcheeUserIds": {
-        "30997": true,
-        "46604": true
+        "61409": true
       }
     }
   },
   "posts": {
-    "367868": {
-      "id": "367868",
-      "creatorId": 30997,
+    "232314": {
+      "id": "233331",
+      "creatorId": 52842,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+      "title": "Hello Kitty Director",
+      "start": "2011-10-04T14:48:00.000Z",
+      "description": "Dedicated technical wizard with a passion and interest in human relationships",
+      "createdAt": "2023-03-13T08:02:41.972Z",
+      "likes": {},
+      "comments": []
+    },
+    "233314": {
+      "id": "233331",
+      "creatorId": 52842,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+      "title": "Hello Kitty Director",
+      "start": "2011-10-04T14:48:00.000Z",
+      "description": "Dedicated technical wizard with a passion and interest in human relationships",
+      "createdAt": "2023-03-13T08:02:41.972Z",
+      "likes": {},
+      "comments": []
+    },
+    "233324": {
+      "id": "233324",
+      "creatorId": 52842,
       "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
       "title": "Hello Kitty Director",
       "start": "2011-10-05T14:48:00.000Z",
       "description": "Dedicated technical wizard with a passion and interest in human relationships",
-      "createdAt": "2023-03-14T06:31:27.045Z",
+      "createdAt": "2023-03-14T08:02:41.972Z",
+      "likes": {},
+      "comments": []
+    },
+    "233331": {
+      "id": "233331",
+      "creatorId": 52842,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+      "title": "Hello Kitty Director",
+      "start": "2011-10-04T14:48:00.000Z",
+      "description": "Dedicated technical wizard with a passion and interest in human relationships",
+      "createdAt": "2023-03-13T08:02:41.972Z",
+      "likes": {},
+      "comments": []
+    },
+    "233334": {
+      "id": "233331",
+      "creatorId": 52842,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+      "title": "Hello Kitty Director",
+      "start": "2011-10-04T14:48:00.000Z",
+      "description": "Dedicated technical wizard with a passion and interest in human relationships",
+      "createdAt": "2023-03-13T08:02:41.972Z",
+      "likes": {},
+      "comments": []
+    },
+    "235314": {
+      "id": "233331",
+      "creatorId": 52842,
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==",
+      "title": "Hello Kitty Director",
+      "start": "2011-10-04T14:48:00.000Z",
+      "description": "Dedicated technical wizard with a passion and interest in human relationships",
+      "createdAt": "2023-03-13T08:02:41.972Z",
       "likes": {},
       "comments": []
     }
   },
-  "nextMessageId": 1
+  "nextMessageId": 5
 }

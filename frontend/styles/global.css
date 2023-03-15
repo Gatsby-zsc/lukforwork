@@ -11,7 +11,7 @@ body {
     background-color: #ffffff;
 }
 
-.container {
+#Login {
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -188,6 +188,46 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#Homepage {
+    width: 100vw;
+    background-color: #f3f2ef;
+}
+
+#Menu-bar {
+    width: 100vw;
+    height: 50px;
+    background-color: #ffffff;
+}
+
+#Homepage-content {
+    margin: 20px auto 0 auto;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+}
+
+.Homepage-Item {
+    border-radius: 10px;
+}
+
+#User-window {
+    width: 20%;
+}
+
+#Linked-In-News {
+    width: 20%;
+}
+
+#Posts {
+    width: 40%;
+}
+
+.Homepage-Item {
+    height: 100vh;
+    background-color: #ffffff;
 }
 
 .hidden {
