@@ -16,8 +16,8 @@ export function login() {
         if (localStorage.getItem("token") !== null) {
             // ensure the user logged in can access the data
             localStorage.removeItem("token", data.token);
-            localStorage.setItem("token", data.token);
         }
+        localStorage.setItem("token", data.token);
 
         renderHomePage();
     };
@@ -43,8 +43,9 @@ export function registration() {
     const successRegister = (data) => {
         if (localStorage.getItem("token") !== null) {
             localStorage.removeItem("token", data.token);
-            localStorage.setItem("token", data.token);
         }
+        localStorage.setItem("token", data.token);
+
         document.getElementById("Login").classList.add("hidden");
         renderHomePage();
     };
