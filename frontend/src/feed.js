@@ -73,10 +73,11 @@ export function renderEachPost(postInfo) {
     jobImage.src = postInfo.image;
 
     const jobLikes = postContent.childNodes[9];
-    jobLikes.textContent = postInfo.likes.length;
+    jobLikes.textContent = "Likes: " + postInfo.likes.length;
+    console.log(typeof postInfo.likes);
 
     const jobComments = postContent.childNodes[11];
-    jobComments.textContent = postInfo.comments.length;
+    jobComments.textContent = "Comments: " + postInfo.comments.length;
 
     document.getElementById("post").insertBefore(newPost, oldPost);
     // insert the newly created node ahead of template node each time
