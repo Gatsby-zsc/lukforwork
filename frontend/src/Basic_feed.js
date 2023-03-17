@@ -70,15 +70,7 @@ export function renderEachPost(postInfo) {
     jobDescription.textContent = postInfo.description;
 
     const jobImage = postContent.childNodes[7];
-    // jobImage.setAttribute("id", "jobImage");
-    // const file = document.querySelector('input[type="file"]').files;
-
-    // fileToDataUrl(file[0]).then((img) => {
-    //     let jobImg = document.getElementById("jobImage");
-    //     jobImg.src = img;
-    // });
-
-    // jobImage.removeAttribute("id");
+    jobImage.src = postInfo.image;
 
     const jobLikes = postContent.childNodes[9];
     jobLikes.textContent = postInfo.likes.length;
