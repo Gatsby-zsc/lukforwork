@@ -2,84 +2,110 @@ import { fetchGET } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
 
 export function ProcessCreatorId(creatorId) {
-  function getAllInfo(data) {
-    localStorage.setItem("CreatorName", data.name);
-    localStorage.setItem("CreatorFollowers", data.watcheeUserIds.length);
-  }
+    function getAllInfo(data) {
+        let creatorName = document.getElementById("creatorName");
+        let creatorFollowers = document.getElementById("followers");
 
-  fetchGET(
-    `user?userId=${creatorId}`,
-    getAllInfo,
-    "error when getting cretator info"
-  );
+        creatorName.textContent = data.name;
+        creatorFollowers.textContent =
+            data.watcheeUserIds.length + " followers";
+
+        creatorName.removeAttribute("Id");
+        creatorFollowers.removeAttribute("Id");
+    }
+
+    fetchGET(
+        `user?userId=${creatorId}`,
+        getAllInfo,
+        "error when getting cretator info"
+    );
 }
 
 export function AnalyzeTime(date) {
-  let NewDate = Date.parse(date);
-  // console.log(NewDate.getDay());
+    const currentTime = Date.now();
+    const postTime = Date.parse(date);
+
+    const timeStamp = currentTime - postTime;
+    if (timeStamp > 86_400_000) {
+        // post 24 hours ago
+        let retTime = new Date(postTime).toISOString();
+        retTime = retTime.substring(0, 10).split("-");
+        retTime = retTime[2] + "/" + retTime[1] + "/" + retTime[0];
+        return retTime;
+    } else {
+        // post within 24 hours
+        const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
+        const hours = Math.trunc(timeStamp / 3_600_000);
+        return hours + " hours " + minutes + " minutes ago";
+    }
 }
 
-export function renderEachPost(PostInfo) {
-  // render all information for each post
+export function renderEachPost(postInfo) {
+    // render all information for each post
 
-  let OldPost = document.getElementById("post-Template");
-  let NewPost = OldPost.cloneNode(true);
-  NewPost.removeAttribute("Id");
-  const CreatorContent = NewPost.childNodes[1];
-  const PostContent = NewPost.childNodes[3];
+    let oldPost = document.getElementById("post-Template");
+    let newPost = oldPost.cloneNode(true);
+    newPost.removeAttribute("Id");
+    const creatorContent = newPost.childNodes[1];
+    const postContent = newPost.childNodes[3];
 
-  ProcessCreatorId(PostInfo.creatorId);
-  AnalyzeTime(PostInfo.createdAt);
+    // need to modify for insert image
+    const creatorName = creatorContent.childNodes[3].childNodes[1];
+    creatorName.setAttribute("id", "creatorName");
 
-  // need to modify for insert image
-  const CreatorName = CreatorContent.childNodes[3].childNodes[1];
-  CreatorName.textContent = localStorage.getItem("CreatorName");
+    const followers = creatorContent.childNodes[3].childNodes[3];
+    followers.setAttribute("id", "followers");
+    ProcessCreatorId(postInfo.creatorId);
 
-  const Followers = CreatorContent.childNodes[3].childNodes[3];
-  Followers.textContent =
-    localStorage.getItem("CreatorFollowers") + " followers";
+    const postDate = creatorContent.childNodes[3].childNodes[5];
+    postDate.textContent = AnalyzeTime(postInfo.createdAt);
 
-  const PostDate = CreatorContent.childNodes[3].childNodes[5];
-  PostDate.textContent = PostInfo.createdAt;
+    const jobTitle = postContent.childNodes[1];
+    jobTitle.textContent = postInfo.title;
 
-  const JobTitle = PostContent.childNodes[1];
-  JobTitle.textContent = PostInfo.title;
+    const startDate = postContent.childNodes[3];
+    startDate.textContent = "Start at " + AnalyzeTime(postInfo.start);
 
-  const StartDate = PostContent.childNodes[3];
-  StartDate.textContent = PostInfo.start;
+    const jobDescription = postContent.childNodes[5];
+    jobDescription.textContent = postInfo.description;
 
-  const JobDescription = PostContent.childNodes[5];
-  JobDescription.textContent = PostInfo.description;
+    const jobImage = postContent.childNodes[7];
+    // jobImage.setAttribute("id", "jobImage");
+    // const file = document.querySelector('input[type="file"]').files;
 
-  const JobImage = PostContent.childNodes[7];
+    // fileToDataUrl(file[0]).then((img) => {
+    //     let jobImg = document.getElementById("jobImage");
+    //     jobImg.src = img;
+    // });
 
-  const JobLikes = PostContent.childNodes[9];
-  JobLikes.textContent = PostInfo.likes.length;
+    // jobImage.removeAttribute("id");
 
-  const JobComments = PostContent.childNodes[11];
-  JobComments.textContent = PostInfo.comments.length;
+    const jobLikes = postContent.childNodes[9];
+    jobLikes.textContent = postInfo.likes.length;
 
-  document.getElementById("post").insertBefore(NewPost, OldPost);
-  // insert the newly created node ahead of template node each time
+    const jobComments = postContent.childNodes[11];
+    jobComments.textContent = postInfo.comments.length;
+
+    document.getElementById("post").insertBefore(newPost, oldPost);
+    // insert the newly created node ahead of template node each time
 }
 
 export function renderHomePage() {
-  document.getElementById("login").classList.add("Hidden");
-  document.getElementById("homepage").classList.remove("Hidden");
-  const renderPost = (data) => {
-    alert(`There are ${data.length} posts`);
-    // for debugging
-    for (let item of data) {
-      renderEachPost(item);
-    }
-  };
-  let currentPage = localStorage.getItem("Page");
-  localStorage.setItem("Page", Number(currentPage) + 5);
-  // update page to retrieve next 5 Posts next time
+    document.getElementById("login").classList.add("Hidden");
+    document.getElementById("homepage").classList.remove("Hidden");
+    const renderPost = (data) => {
+        // for debugging
+        for (let item of data) {
+            renderEachPost(item);
+        }
+    };
+    let currentPage = localStorage.getItem("Page");
+    localStorage.setItem("Page", Number(currentPage) + 5);
+    // update page to retrieve next 5 Posts next time
 
-  fetchGET(
-    `job/feed?start=${currentPage}`,
-    renderPost,
-    "error happen when render"
-  );
+    fetchGET(
+        `job/feed?start=${currentPage}`,
+        renderPost,
+        "error happen when render"
+    );
 }
