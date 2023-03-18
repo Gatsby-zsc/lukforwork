@@ -4,3 +4,4 @@
 4. user avator
 5. border colored when focus (login interface)
 6. animation when frame changed
+7. logout

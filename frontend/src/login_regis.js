@@ -1,9 +1,14 @@
-import { fetchPOST } from "./fetch.js";
+import { fetchPOST, fetchGET } from "./fetch.js";
 import { errorPopup } from "./error_handle.js";
 import { renderHomePage } from "./feed.js";
 
+export function setUpUserName(userInfo) {
+    // store user info to reuse later
+    localStorage.setItem(userInfo.id, userInfo.name);
+    localStorage.setItem(userInfo.name, userInfo.id);
+}
+
 export function login() {
-    // need to be modified later for fetch
     const eamilField = document.getElementById("email").value;
     const passwordField = document.getElementById("password").value;
 
@@ -19,7 +24,11 @@ export function login() {
         }
         localStorage.setItem("token", data.token);
         localStorage.setItem("loginUser", data.userId);
-
+        fetchGET(
+            `user?userId=${data.userId}`,
+            setUpUserName,
+            "error happens when logging"
+        );
         renderHomePage();
     };
 
@@ -47,7 +56,11 @@ export function registration() {
         }
         localStorage.setItem("token", data.token);
         localStorage.setItem("loginUser", data.userId);
-
+        fetchGET(
+            `user?userId=${data.userId}`,
+            setUpUserName,
+            "error happens when logging"
+        );
         document.getElementById("Login").classList.add("hidden");
         renderHomePage();
     };

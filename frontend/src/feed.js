@@ -1,10 +1,11 @@
 import { fetchGET, fetchPUT } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
+import { addEventForEachName, renderProfile } from "./viewProfile.js";
 
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
     function getAllInfo(data) {
         localStorage.setItem(data.name, data.id);
-        // localStorage.setItem(data.id, data.name);
+        localStorage.setItem(data.id, data.name);
         creatorName.textContent = data.name;
 
         data.watcheeUserIds.length == 1
@@ -44,7 +45,7 @@ export function analyzeTime(date) {
 }
 
 export function processUserLikes(user, likeUsers) {
-    let node = document.createElement("li");
+    let node = document.createElement("p");
     let textnode = document.createTextNode(user);
     node.appendChild(textnode);
     node.classList.add("User-name");
@@ -60,29 +61,85 @@ export function processEachComment(comment, commentContent) {
     commentContent.appendChild(node);
 }
 
-export function likeJobOrComment(
-    firstButton,
-    secondButton,
-    postInfoid,
-    likeList,
-    jobLikes
-) {
-    // need to modify for second button
-    // request like this comment to server
-    firstButton.addEventListener("click", () => {
-        const loginUser = Number(localStorage.getItem("loginUser"));
-        if (likeList.includes(loginUser) !== true) {
-            // user didn't like this post before
-            console.log("send request");
-            firstButton.addEventListener("click", () => {
-                fetchPUT(
-                    "job/like",
-                    { id: postInfoid, turon: true },
-                    "Error happens when sending like request"
-                );
-            });
-            const currentLikes = Number(jobLikes.textContent) + 1;
-            jobLikes.textContent = currentLikes;
+export function getNumberUserLikes(likeStr) {
+    const processedStr = likeStr.split(" ");
+    let currentNumber = Number(processedStr[1]);
+    return currentNumber;
+}
+
+export function getMemberLikeList(postInfoid) {
+    let rawArr = localStorage.getItem(`${postInfoid} Member List`).split(" ");
+    let retArr = [];
+    for (const item of rawArr) {
+        if (item !== "") {
+            retArr.push(item);
+        }
+    }
+    return retArr;
+}
+
+export function removeUserFromLikes(loginUser, likeList, postInfoid) {
+    let retStr = "";
+    for (const item of likeList) {
+        if (item !== loginUser) {
+            retStr = retStr + " " + item;
+        }
+    }
+
+    const likeMemberList = postInfoid + " Member List";
+    localStorage.setItem(likeMemberList, retStr);
+}
+export function addUserintoLikes(loginUser, likeList, postInfoid) {
+    let retStr = "";
+    retStr = retStr + " " + loginUser;
+    for (const item of likeList) {
+        retStr = retStr + " " + item;
+    }
+
+    const likeMemberList = postInfoid + " Member List";
+    localStorage.setItem(likeMemberList, retStr);
+}
+
+export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
+    // request like this post to server
+    likeButton.addEventListener("click", () => {
+        const loginUser = localStorage.getItem("loginUser");
+        const userName = localStorage.getItem(loginUser);
+        const likeList = getMemberLikeList(postInfo.id);
+        const userList = likeUsers.querySelectorAll("p");
+        if (likeList.includes(loginUser) === true) {
+            fetchPUT(
+                "job/like",
+                { id: postInfo.id, turnon: false },
+                "Error happens when sending unlike request"
+            );
+            removeUserFromLikes(loginUser, likeList, postInfo.id);
+            likeButton.textContent = "Like this Post!!!";
+            let currentNumberUserLike =
+                getNumberUserLikes(jobLikes.textContent) - 1;
+
+            for (let item of userList) {
+                if (item.textContent == userName) {
+                    item.remove();
+                    // delete user who just like the post
+                }
+            }
+
+            jobLikes.textContent = "Like: " + currentNumberUserLike;
+        } else {
+            fetchPUT(
+                "job/like",
+                { id: postInfo.id, turnon: true },
+                "Error happens when sending like request"
+            );
+            addUserintoLikes(loginUser, likeList, postInfo.id);
+            likeButton.textContent = "Unlike this Post";
+            let currentNumberUserLike =
+                getNumberUserLikes(jobLikes.textContent) + 1;
+
+            processUserLikes(userName, likeUsers);
+
+            jobLikes.textContent = "Like: " + currentNumberUserLike;
         }
     });
 }
@@ -123,18 +180,16 @@ export function renderEachPost(postInfo) {
     const jobLikes = likeAndComment.childNodes[1];
     jobLikes.textContent = "Likes: " + postInfo.likes.length;
 
-    const likeList = [];
-    // used for updating like number when user clikc "like" button
-    for (const user of postInfo.likes) {
-        likeList.push(user.userId);
-    }
-
     const likeUsers = likeAndComment.childNodes[3];
+    let userStr = "";
     for (const user of postInfo.likes) {
+        userStr = userStr + " " + user.userId;
         localStorage.setItem(user.userName, user.userId);
-        // localStorage.setItem(user.userId, user.userName);
+        localStorage.setItem(user.userId, user.userName);
         processUserLikes(user.userName, likeUsers);
     }
+    const likeMemberList = postInfo.id + " Member List";
+    localStorage.setItem(likeMemberList, userStr);
 
     jobLikes.addEventListener("click", () => {
         // implement a toggle to switch between hide and show
@@ -163,16 +218,11 @@ export function renderEachPost(postInfo) {
     });
 
     const functionSection = likeAndComment.childNodes[9];
-    const firstButton = functionSection.childNodes[1];
+    const likeButton = functionSection.childNodes[1];
     const secondButton = functionSection.childNodes[3];
-    likeJobOrComment(
-        firstButton,
-        secondButton,
-        postInfo.id,
-        likeList,
-        jobLikes
-    );
+    likeJob(likeButton, postInfo, jobLikes, likeUsers);
 
+    addEventForEachName(newPost);
     document.getElementById("post").insertBefore(newPost, oldPost);
     // insert the newly created node ahead of template node each time
 }

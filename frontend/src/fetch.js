@@ -44,9 +44,9 @@ export function fetchGET(req, success, err) {
 
 export function fetchPUT(req, bodyInfo, err) {
     fetch(`http://localhost:5005/` + req, {
-        method: "GET",
+        method: "PUT",
         headers: {
-            "Content-Type": "application/json;charset=utf-8",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify(bodyInfo),
