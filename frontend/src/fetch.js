@@ -42,6 +42,17 @@ export function fetchGET(req, success, err) {
         });
 }
 
-export function fetchPUT() {}
+export function fetchPUT(req, bodyInfo, err) {
+    fetch(`http://localhost:5005/` + req, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json;charset=utf-8",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(bodyInfo),
+    }).catch(() => {
+        errorPopup(err);
+    });
+}
 
 export function fetchDELETE() {}

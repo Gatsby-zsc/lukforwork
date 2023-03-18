@@ -1,196 +1,237 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>LurkForWork</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- You can add your styles and scripts here -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      media="screen"
-      href="styles/global.css"
-    />
-  </head>
-  <body>
-    <div id="login">
-      <header>
-        <div class="LurkForWork-logo">
-          LurkFor<span class="Logo">Work</span>
-        </div>
-      </header>
-      <div id="login-interface">
-        <main class="Card-layout">
-          <div class="Window">
-            <div>
-              <div class="Header-content">
-                <h1>Sign in</h1>
-                <p>Stay updated on your professional world</p>
-              </div>
-              <div class="Email">
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email or Phone"
-                  value="betty@email.com"
-                />
-              </div>
-
-              <div class="Password">
-                <input
-                  type="password"
-                  id="password"
-                  placeholder="Password"
-                  name="password"
-                  value="cardigan"
-                />
-              </div>
-
-              <div class="Rem-div">
-                <div>
-                  <input id="remember-me" name="remember-me" type="checkbox" />
-                  <label for="remember-me">Remember me</label>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>LurkForWork</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- You can add your styles and scripts here -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            media="screen"
+            href="styles/global.css"
+        />
+    </head>
+    <body>
+        <div id="login">
+            <header>
+                <div class="LurkForWork-logo">
+                    LurkFor<span class="Logo">Work</span>
                 </div>
-                <div>
-                  <div class="Switch-btn Forgot-btn">Forgot password?</div>
+            </header>
+            <div id="login-interface">
+                <main class="Card-layout">
+                    <div class="Window">
+                        <div>
+                            <div class="Header-content">
+                                <h1>Sign in</h1>
+                                <p>Stay updated on your professional world</p>
+                            </div>
+                            <div class="Email">
+                                <input
+                                    type="text"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Email or Phone"
+                                    value="betty@email.com"
+                                />
+                            </div>
+
+                            <div class="Password">
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Password"
+                                    name="password"
+                                    value="cardigan"
+                                />
+                            </div>
+
+                            <div class="Rem-div">
+                                <div>
+                                    <input
+                                        id="remember-me"
+                                        name="remember-me"
+                                        type="checkbox"
+                                    />
+                                    <label for="remember-me">Remember me</label>
+                                </div>
+                                <div>
+                                    <div class="Switch-btn Forgot-btn">
+                                        Forgot password?
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="Sign-in">
+                                <input
+                                    type="submit"
+                                    id="sign-in-button"
+                                    value="Sign in"
+                                />
+                            </div>
+                            <div class="Join-switch">
+                                New to LurkForWork?
+                                <button
+                                    class="Switch-btn Join-switch"
+                                    id="switch-join-btn"
+                                >
+                                    Join now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+
+            <!-- register hidden -->
+            <div id="registration-interface" class="Hidden">
+                <main class="Card-layout">
+                    <div class="Window">
+                        <div class="Header-content">
+                            <h1>Register now</h1>
+                            <p>Make the most of your professional life</p>
+                        </div>
+                        <div class="Email">
+                            <input
+                                type="text"
+                                id="regis-email"
+                                placeholder="Email or Phone"
+                            />
+                        </div>
+                        <div class="Name">
+                            <input
+                                type="text"
+                                id="regis-name"
+                                placeholder="Name"
+                            />
+                        </div>
+                        <div class="Password">
+                            <input
+                                type="password"
+                                id="regis-password"
+                                placeholder="Password"
+                            />
+                        </div>
+                        <div class="Password-confirm">
+                            <input
+                                type="password"
+                                id="password-confirm"
+                                placeholder="Confirm password"
+                            />
+                        </div>
+
+                        <div class="Sign-in">
+                            <input
+                                type="submit"
+                                id="register-button"
+                                value="Join in now"
+                            />
+                        </div>
+                        <div class="Join-switch">
+                            Already on LurkForWork?
+                            <button
+                                class="Switch-btn Join-switch"
+                                id="switch-sign-btn"
+                            >
+                                Sign in
+                            </button>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <div id="homepage" class="Hidden">
+            <header id="menu-bar">
+                <div id="menu-items">
+                    <div class="Homepage-Logo">Work</div>
+                    <div id="search-div">
+                        <input id="search" type="text" placeholder="Search" />
+                    </div>
+
+                    <button>Home</button>
+                    <button>My Network</button>
+                    <button>Jobs</button>
+                    <button>Me</button>
                 </div>
-              </div>
+            </header>
 
-              <div class="Sign-in">
-                <input type="submit" id="sign-in-button" value="Sign in" />
-              </div>
-              <div class="Join-switch">
-                New to LurkForWork?
-                <button class="Switch-btn Join-switch" id="switch-join-btn">
-                  Join now
-                </button>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
-
-      <!-- register hidden -->
-      <div id="registration-interface" class="Hidden">
-        <main class="Card-layout">
-          <div class="Window">
-            <div class="Header-content">
-              <h1>Register now</h1>
-              <p>Make the most of your professional life</p>
-            </div>
-            <div class="Email">
-              <input
-                type="text"
-                id="regis-email"
-                placeholder="Email or Phone"
-              />
-            </div>
-            <div class="Name">
-              <input type="text" id="regis-name" placeholder="Name" />
-            </div>
-            <div class="Password">
-              <input
-                type="password"
-                id="regis-password"
-                placeholder="Password"
-              />
-            </div>
-            <div class="Password-confirm">
-              <input
-                type="password"
-                id="password-confirm"
-                placeholder="Confirm password"
-              />
-            </div>
-
-            <div class="Sign-in">
-              <input type="submit" id="register-button" value="Join in now" />
-            </div>
-            <div class="Join-switch">
-              Already on LurkForWork?
-              <button class="Switch-btn Join-switch" id="switch-sign-btn">
-                Sign in
-              </button>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
-
-    <div id="homepage" class="Hidden">
-      <header id="menu-bar">
-        <div id="menu-items">
-          <div class="Homepage-Logo">Work</div>
-          <div id="search-div">
-            <input id="search" type="text" placeholder="Search" />
-          </div>
-
-          <button>Home</button>
-          <button>My Network</button>
-          <button>Jobs</button>
-          <button>Me</button>
-        </div>
-      </header>
-
-      <main id="homepage-content">
-        <div id="user-window">
-          <div id="user-layout" class="Homepage-Item">
-            <div>Personal Info</div>
-            <div>Connections</div>
-            <div>My items</div>
-          </div>
-          <div id="recent-history" class="Homepage-Item">Recent</div>
-        </div>
-        <div id="posts-div">
-          <div id="new-post" class="Homepage-Item">
-            <div id="text-post-div">
-              <div class="Post-head-pic">P-img</div>
-              <button id="text-post">Start a post</button>
-            </div>
-            <div class="Post-select">
-              <button>Photo</button>
-              <button>Video</button>
-              <button>Event</button>
-              <button>Write article</button>
-            </div>
-          </div>
-          <hr class="Feed-border" />
-
-          <div id="post">
-            <div id="post-template" class="Homepage-Item">
-              <div class="Creator-content">
-                <div class="Creator-img"></div>
-                <div class="Creator-info">
-                  <span class="Creator-name"></span>
-                  <div class="Followers"></div>
-                  <div class="Post-date"></div>
+            <main id="homepage-content">
+                <div id="user-window">
+                    <div id="user-layout" class="Homepage-Item">
+                        <div>Personal Info</div>
+                        <div>Connections</div>
+                        <div>My items</div>
+                    </div>
+                    <div id="recent-history" class="Homepage-Item">Recent</div>
                 </div>
-              </div>
-              <div class="Post-content">
-                <span class="Job-title"></span>
-                <div class="Start-date"></div>
-                <div class="Job-description"></div>
-              </div>
-              <img class="Job-image" />
-              <p class="Likes"></p>
-              <p class="Comments"></p>
-            </div>
-          </div>
+                <div id="posts-div">
+                    <div id="new-post" class="Homepage-Item">
+                        <div id="text-post-div">
+                            <div class="Post-head-pic">P-img</div>
+                            <button id="text-post">Start a post</button>
+                        </div>
+                        <div class="Post-select">
+                            <button>Photo</button>
+                            <button>Video</button>
+                            <button>Event</button>
+                            <button>Write article</button>
+                        </div>
+                    </div>
+                    <hr class="Feed-border" />
+
+                    <div id="post">
+                        <div id="post-template" class="Homepage-Item">
+                            <div class="Creator-content">
+                                <div class="Creator-img"></div>
+                                <div class="Creator-info">
+                                    <span class="Creator-name"></span>
+                                    <div class="Followers"></div>
+                                    <div class="Post-date"></div>
+                                </div>
+                            </div>
+                            <div class="Post-content">
+                                <span class="Job-title"></span>
+                                <div class="Start-date"></div>
+                                <div class="Job-description"></div>
+                            </div>
+                            <img class="Job-image" alt="Job-image" />
+                            <div class="Likes&Comment">
+                                <p class="Likes"></p>
+                                <div class="Like-user Hidden"></div>
+                                <p class="Comments"></p>
+                                <div class="Comment Hidden"></div>
+                                <div class="Function">
+                                    <button class="Like">
+                                        Like this Post!!!
+                                    </button>
+                                    <button class="Comment">
+                                        I wanna comment
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="comment-template" class="Each-comment">
+                    <span class="User-post-comment User-name"></span>
+                    <p class="User-comment"></p>
+                </div>
+
+                <div id="news">
+                    <div id="work-news" class="Homepage-Item">News</div>
+                    <div id="promoted" class="Homepage-Item">Promoted</div>
+                </div>
+            </main>
         </div>
 
-        <div id="news">
-          <div id="work-news" class="Homepage-Item">News</div>
-          <div id="promoted" class="Homepage-Item">Promoted</div>
+        <div id="error-box" class="Hidden">
+            <p id="error-message"></p>
+            <button id="close-error-window">close this window</button>
         </div>
-      </main>
-    </div>
-
-    <div id="error-box" class="Hidden">
-      <p id="error-message"></p>
-      <button id="close-error-window">close this window</button>
-    </div>
-    <script type="module" src="src/main.js"></script>
-  </body>
+        <script type="module" src="src/main.js"></script>
+    </body>
 </html>
