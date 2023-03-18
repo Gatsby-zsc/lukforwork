@@ -1,0 +1,6 @@
+1. remember me
+2. forget password
+3. sidebar relative position
+4. user avator
+5. border colored when focus (login interface)
+6. animation when frame changed
