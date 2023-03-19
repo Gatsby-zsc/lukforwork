@@ -228,6 +228,28 @@
             </main>
         </div>
 
+        <div id="profile-template" class="Each-profile Hidden">
+            <div class="Profile-user-info">
+                <p class="Profile-User-email"></p>
+                <p class="Profile-user-name"></p>
+                <p class="Profile-user-id"></p>
+                <div class="Profile-user-watched-by"></div>
+            </div>
+            <div class="Profile-jobs-info"></div>
+        </div>
+
+        <div id="update-profile" class="Hidden">
+            <label for="new-eamil">Your new email</label>
+            <input type="text" id="new-eamil" /><br />
+            <label for="new-password">Your new password</label>
+            <input type="text" id="new-password" /><br />
+            <label for="new-name">Your new name</label>
+            <input type="text" id="new-name" /><br />
+            <label for="new-img">Your new image</label><br />
+            <input type="file" id="new-img" /><br />
+            <button id="upload-info">update profile</button>
+        </div>
+
         <div id="error-box" class="Hidden">
             <p id="error-message"></p>
             <button id="close-error-window">close this window</button>

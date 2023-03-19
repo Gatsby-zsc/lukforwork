@@ -419,3 +419,16 @@ body {
 
 .Function {
 }
+
+#update-profile {
+    position: fixed;
+    top: 40vh;
+    left: 38vw;
+    border: thick double #32a1ce;
+    background-color: #ffffff;
+}
+
+#upload-info {
+    display: block;
+    margin: 0 auto;
+}
