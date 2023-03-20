@@ -432,3 +432,11 @@ body {
     display: block;
     margin: 0 auto;
 }
+
+#profile-template {
+    position: fixed;
+    top: 40vh;
+    left: 38vw;
+    border: thick double #32a1ce;
+    background-color: #ffffff;
+}

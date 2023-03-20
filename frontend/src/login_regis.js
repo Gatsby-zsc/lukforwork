@@ -9,10 +9,10 @@ export function setUpUserName(userInfo) {
 }
 
 export function login() {
-    const eamilField = document.getElementById("email").value;
+    const emailField = document.getElementById("email").value;
     const passwordField = document.getElementById("password").value;
 
-    if (eamilField === "" || passwordField === "") {
+    if (emailField === "" || passwordField === "") {
         errorPopup("Please input your email and password");
         return;
     }
@@ -34,7 +34,7 @@ export function login() {
 
     fetchPOST(
         "auth/login",
-        { email: eamilField, password: passwordField },
+        { email: emailField, password: passwordField },
         successLogin,
         "Invalid Email or Password."
     );

@@ -161,7 +161,7 @@
             <main id="homepage-content">
                 <div id="user-window">
                     <div id="user-layout" class="Homepage-Item">
-                        <div>Personal Info</div>
+                        <div id="my-profile">Personal Info</div>
                         <div>Connections</div>
                         <div>My items</div>
                     </div>
@@ -185,7 +185,7 @@
                     <div id="post">
                         <div id="post-template" class="Homepage-Item">
                             <div class="Creator-content">
-                                <img class="Creator-img" alt="Creator-img"></img>
+                                <img class="Creator-img" alt="Creator-img" />
                                 <div class="Creator-info">
                                     <span class="Creator-name"></span>
                                     <div class="Followers"></div>
@@ -204,9 +204,7 @@
                                 <p class="Comments"></p>
                                 <div class="Comment Hidden"></div>
                                 <div class="Function">
-                                    <button class="Like">
-                                        Like this Post!!!
-                                    </button>
+                                    <button class="Like"></button>
                                     <button class="Comment">
                                         I wanna comment
                                     </button>
@@ -216,8 +214,6 @@
                     </div>
                 </div>
 
-              
-
                 <div id="news">
                     <div id="work-news" class="Homepage-Item">News</div>
                     <div id="promoted" class="Homepage-Item">Promoted</div>
@@ -226,24 +222,31 @@
         </div>
 
         <div id="like-user-template">
-            <img class="user-like-img User-name">
-            <p class="user-like-name User-name">
+            <img class="user-like-img User-name" />
+            <p class="user-like-name User-name"></p>
         </div>
 
         <div id="comment-template" class="Each-comment">
-            <img class="user-post-img User-name">
+            <img class="user-post-img User-name" />
             <span class="User-post-comment User-name"></span>
             <p class="User-comment"></p>
         </div>
 
-        <div id="profile-template" class="Each-profile Hidden">
-            <div class="Profile-user-info">
-                <p class="Profile-User-email"></p>
-                <p class="Profile-user-name"></p>
-                <p class="Profile-user-id"></p>
-                <div class="Profile-user-watched-by"></div>
+        <!-- popup window each time we render user profile -->
+        <div id="profile-template" class="Hidden">
+            <div id="profile-user-info">
+                <img id="profile-user-img" alt="user image" />
+                <p id="profile-user-name"></p>
+                <p id="profile-user-id"></p>
+                <p id="profile-user-email"></p>
+                <p id="profile-user-watched-by"></p>
+                <div id="profile-watched-by-list"></div>
             </div>
-            <div class="Profile-jobs-info"></div>
+            <div id="profile-jobs-info"></div>
+
+            <button id="close-profile">close profile window</button>
+
+            <button id="watch-and-unwatch-user"></button>
         </div>
 
         <div id="update-profile" class="Hidden">

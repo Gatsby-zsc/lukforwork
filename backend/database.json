@@ -75,7 +75,9 @@
       "start": "2011-10-05T14:48:00.000Z",
       "description": "Dedicated technical wizard with a passion and interest in human relationships",
       "createdAt": "2023-03-18T03:16:00.145Z",
-      "likes": {},
+      "likes": {
+        "45494": true
+      },
       "comments": []
     },
     "441990": {
