@@ -45,19 +45,32 @@ export function analyzeTime(date) {
 }
 
 export function processUserLikes(user, likeUsers) {
-    let node = document.createElement("p");
-    let textnode = document.createTextNode(user);
-    node.appendChild(textnode);
-    node.classList.add("User-name");
-    likeUsers.appendChild(node);
+    const userNode = document
+        .getElementById("like-user-template")
+        .cloneNode(true);
+    userNode.removeAttribute("id");
+
+    const userImgNode = userNode.childNodes[1];
+    const userNameNode = userNode.childNodes[3];
+
+    const userId = localStorage.getItem(user);
+    renderUserImge(userImgNode, userId);
+
+    userNameNode.textContent = user;
+
+    likeUsers.appendChild(userNode);
 }
 
 export function processEachComment(comment, commentContent) {
-    // we can try to implement paging for post section
     let node = document.getElementById("comment-template").cloneNode(true);
     node.removeAttribute("id");
-    node.childNodes[1].textContent = comment.userName;
-    node.childNodes[3].textContent = comment.comment;
+
+    const userImgNode = node.childNodes[1];
+    const userId = localStorage.getItem(comment.userName);
+    renderUserImge(userImgNode, userId);
+    // add user img for each user
+    node.childNodes[3].textContent = comment.userName;
+    node.childNodes[5].textContent = comment.comment;
     commentContent.appendChild(node);
 }
 
@@ -89,6 +102,7 @@ export function removeUserFromLikes(loginUser, likeList, postInfoid) {
     const likeMemberList = postInfoid + " Member List";
     localStorage.setItem(likeMemberList, retStr);
 }
+
 export function addUserintoLikes(loginUser, likeList, postInfoid) {
     let retStr = "";
     retStr = retStr + " " + loginUser;
@@ -106,7 +120,7 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
         const loginUser = localStorage.getItem("loginUser");
         const userName = localStorage.getItem(loginUser);
         const likeList = getMemberLikeList(postInfo.id);
-        const userList = likeUsers.querySelectorAll("p");
+        const userList = likeUsers.querySelectorAll("div");
         if (likeList.includes(loginUser) === true) {
             fetchPUT(
                 "job/like",
@@ -119,7 +133,7 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
                 getNumberUserLikes(jobLikes.textContent) - 1;
 
             for (let item of userList) {
-                if (item.textContent == userName) {
+                if (item.childNodes[3].textContent == userName) {
                     item.remove();
                     // delete user who just like the post
                 }
@@ -144,6 +158,18 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
     });
 }
 
+export function renderUserImge(imgNode, userId) {
+    function successFetchImg(data) {
+        imgNode.src = data.image;
+    }
+
+    fetchGET(
+        `user?userId=${userId}`,
+        successFetchImg,
+        "error happens when fetch user img"
+    );
+}
+
 export function renderEachPost(postInfo) {
     // render all information for each post
     // console.log(postInfo);
@@ -153,7 +179,9 @@ export function renderEachPost(postInfo) {
     const creatorContent = newPost.childNodes[1];
     const postContent = newPost.childNodes[3];
 
-    // need to modify for insert creator image
+    const creatorImg = creatorContent.childNodes[1];
+    renderUserImge(creatorImg, postInfo.creatorId);
+
     const creatorName = creatorContent.childNodes[3].childNodes[1];
     creatorName.classList.add("User-name");
 
