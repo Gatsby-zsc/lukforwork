@@ -125,9 +125,9 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
 
   // initialize default field for like button
   if (likeList.includes(loginUser) === false) {
-    likeButton.textContent = "Like this Post!!!";
+    likeButton.textContent = "Like";
   } else {
-    likeButton.textContent = "Unlike this Post";
+    likeButton.textContent = "Unliket";
   }
 
   likeButton.addEventListener("click", () => {
@@ -142,7 +142,7 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
         "Error happens when sending unlike request"
       );
       removeUserFromLikes(loginUser, likeList, postInfo.id);
-      likeButton.textContent = "Like this Post!!!";
+      likeButton.textContent = "Like";
       let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) - 1;
 
       for (let item of userList) {
@@ -160,7 +160,7 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
         "Error happens when sending like request"
       );
       addUserintoLikes(loginUser, likeList, postInfo.id);
-      likeButton.textContent = "Unlike this Post";
+      likeButton.textContent = "Unlike";
       let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) + 1;
 
       processUserLikes(userName, likeUsers);
