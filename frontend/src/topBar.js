@@ -1,3 +1,5 @@
+import { updateProfile, watchUserByBar } from "./viewProfile.js";
+
 export function homeButton() {
   const homeButton = document.getElementById("home-button");
 
@@ -24,4 +26,10 @@ export function homeButton() {
 
 // export function jobsButton();
 
-// export function updateProfileButton();
+export function updateProfileButton() {
+  updateProfile();
+}
+
+export function searchBar() {
+  watchUserByBar();
+}

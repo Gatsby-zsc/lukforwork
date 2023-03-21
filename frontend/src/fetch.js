@@ -50,9 +50,17 @@ export function fetchPUT(req, bodyInfo, err) {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify(bodyInfo),
-  }).catch(() => {
-    errorPopup(err);
-  });
+  })
+    .then((res) => {
+      if (req === "user/watch" && res.status === 400) {
+        alert("no user exist");
+      } else if (req === "user/watch" && res.status === 200) {
+        alert("watch user successfully");
+      }
+    })
+    .catch(() => {
+      errorPopup(err);
+    });
 }
 
 export function fetchDELETE() {}

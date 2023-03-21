@@ -123,14 +123,18 @@
       <header id="menu-bar">
         <div id="menu-items">
           <div class="Homepage-Logo">Work</div>
-          <div id="search-div">
-            <input id="search" type="text" placeholder="Search" />
+          <div id="search-div" class="Hidden">
+            <input
+              id="search-bar"
+              type="text"
+              placeholder="Press Enter for sending email "
+            />
           </div>
 
           <button id="home-button">Home</button>
           <button>My Network</button>
-          <button>Jobs</button>
-          <button>Update my profile</button>
+          <button id="watch-user">Watch/Unwatch user</button>
+          <button id="update-profile-button">Update my profile</button>
         </div>
       </header>
 
@@ -211,6 +215,17 @@
       </main>
     </div>
 
+    <div id="profile-post-template" class="Hidden">
+      <div class="Post-content">
+        <div class="profile-Post-date"></div>
+        <span class="profile-Job-title"></span>
+        <div class="profile-Start-date"></div>
+        <div class="profile-Job-description"></div>
+      </div>
+      <img class="profile-Job-image" alt="Job-image" />
+      </div>
+    </div>
+
     <div id="like-user-template" class="Each-user-watching Hidden">
       <img class="User-img" />
       <span class="Like-name User-name"></span>
@@ -248,10 +263,10 @@
     <div id="update-profile" class="Hidden">
       <label for="new-eamil">Your new email</label>
       <input type="text" id="new-eamil" /><br />
-      <label for="new-password">Your new password</label>
-      <input type="text" id="new-password" /><br />
       <label for="new-name">Your new name</label>
       <input type="text" id="new-name" /><br />
+      <label for="new-password">Your new password</label>
+      <input type="text" id="new-password" /><br />
       <label for="new-img">Your new image</label><br />
       <input type="file" id="new-img" /><br />
       <button id="upload-info">update profile</button>
