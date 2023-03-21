@@ -91,16 +91,16 @@ export function processUserInfo(data) {
   }
 }
 
-export function processCloseButton() {
-  // config button to close profile
-  const closeButton = document.getElementById("close-profile");
+// export function processCloseButton() {
+//   // config button to close profile
+//   const closeButton = document.getElementById("close-profile");
 
-  // remove profile page and render homepage
-  closeButton.addEventListener("click", () => {
-    document.getElementById("profile-page").classList.add("Hidden");
-    document.getElementById("homepage-content").classList.remove("Hidden");
-  });
-}
+//   // remove profile page and render homepage
+//   closeButton.addEventListener("click", () => {
+//     document.getElementById("profile-page").classList.add("Hidden");
+//     document.getElementById("homepage-content").classList.remove("Hidden");
+//   });
+// }
 
 export function processWatchButton(data) {
   const watchButton = document.getElementById("watch-and-unwatch-user");

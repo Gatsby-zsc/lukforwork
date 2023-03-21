@@ -6,6 +6,8 @@ import {
   addEventForMyname,
 } from "./viewProfile.js";
 
+import { homeButton } from "./searchBar.js";
+
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
   function getAllInfo(data) {
     localStorage.setItem(data.name, data.id);
@@ -279,12 +281,16 @@ export function renderHomePage() {
   document.getElementById("login").classList.add("Hidden");
   document.getElementById("homepage").classList.remove("Hidden");
   const renderPost = (data) => {
-    // for debugging
+    // render each post after we fetch 5 posts from server
     for (let item of data) {
       renderEachPost(item);
     }
   };
 
+  // config search bar
+  homeButton();
+
+  // config side bar
   addEventForMyname();
 
   let currentPage = localStorage.getItem("Page");
