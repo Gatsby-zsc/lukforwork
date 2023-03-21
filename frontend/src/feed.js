@@ -1,6 +1,5 @@
 import { fetchGET, fetchPUT } from "./fetch.js";
 import { addEventForEachName, addEventForMyname } from "./viewProfile.js";
-
 import { homeButton, updateProfileButton, searchBar } from "./topBar.js";
 
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
@@ -23,10 +22,12 @@ export function processCreatorId(creatorId, creatorName, creatorFollowers) {
   );
 }
 
+// parse time
 export function analyzeTime(date) {
   const currentTime = Date.now();
   const postTime = Date.parse(date);
   const timeStamp = currentTime - postTime;
+
   if (timeStamp > 86_400_000) {
     // post 24 hours ago
     let retTime = new Date(postTime).toISOString();
@@ -63,7 +64,7 @@ export function processUserLikes(user, likeUsers) {
   likeUsers.appendChild(userNode);
 }
 
-export function processEachComment(comment, commentContent) {
+function processEachComment(comment, commentContent) {
   let commentNode = document.getElementById("comment-template").cloneNode(true);
   commentNode.removeAttribute("id");
   commentNode.classList.remove("Hidden");
@@ -77,13 +78,13 @@ export function processEachComment(comment, commentContent) {
   commentContent.appendChild(commentNode);
 }
 
-export function getNumberUserLikes(likeStr) {
+function getNumberUserLikes(likeStr) {
   const processedStr = likeStr.split(" ");
   let currentNumber = Number(processedStr[1]);
   return currentNumber;
 }
 
-export function getMemberLikeList(postInfoid) {
+function getMemberLikeList(postInfoid) {
   let rawArr = localStorage.getItem(`${postInfoid} Member List`).split(" ");
   let retArr = [];
   for (const item of rawArr) {
@@ -94,7 +95,7 @@ export function getMemberLikeList(postInfoid) {
   return retArr;
 }
 
-export function removeUserFromLikes(loginUser, likeList, postInfoid) {
+function removeUserFromLikes(loginUser, likeList, postInfoid) {
   let retStr = "";
   for (const item of likeList) {
     if (item !== loginUser) {
@@ -106,7 +107,7 @@ export function removeUserFromLikes(loginUser, likeList, postInfoid) {
   localStorage.setItem(likeMemberList, retStr);
 }
 
-export function addUserintoLikes(loginUser, likeList, postInfoid) {
+function addUserintoLikes(loginUser, likeList, postInfoid) {
   let retStr = "";
   retStr = retStr + " " + loginUser;
   for (const item of likeList) {
@@ -117,7 +118,7 @@ export function addUserintoLikes(loginUser, likeList, postInfoid) {
   localStorage.setItem(likeMemberList, retStr);
 }
 
-export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
+function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
   // request like this post to server
   const loginUser = localStorage.getItem("loginUser");
   const likeList = getMemberLikeList(postInfo.id);
@@ -169,7 +170,7 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
   });
 }
 
-export function renderUserImge(imgNode, userId) {
+function renderUserImge(imgNode, userId) {
   function successFetchImg(data) {
     if (data.image !== undefined) {
       imgNode.src = data.image;
@@ -235,10 +236,14 @@ export function renderEachPost(postInfo) {
   localStorage.setItem(likeMemberList, userStr);
 
   jobLikes.addEventListener("click", () => {
-    // modify later
-    // if (postInfo.likes.length === 0) {
-    //     return;
-    // }
+    const getPostUser = localStorage
+      .getItem(postInfo.id.toString() + " Member List")
+      .split(" ");
+
+    if (getPostUser.length === 1) {
+      // don't need to show like list
+      return;
+    }
 
     // implement a toggle to switch between hide and show
     if (likeUsers.classList.contains("Hidden")) {
@@ -296,6 +301,8 @@ export function renderHomePage() {
   let currentPage = localStorage.getItem("Page");
   localStorage.setItem("Page", Number(currentPage) + 5);
   // update page to retrieve next 5 Posts next time
+
+  // infinite scroll
 
   fetchGET(
     `job/feed?start=${currentPage}`,

@@ -9,9 +9,10 @@ export function homeButton() {
       homePage.remove("Hidden");
     }
 
-    const profilePage = document.getElementById("profile-page").classList;
-    if (profilePage.contains("Hidden") === false) {
-      profilePage.add("Hidden");
+    const profilePage = document.getElementById("real-profile");
+    // need to delete whole real profile instead of hiding it
+    if (profilePage) {
+      profilePage.remove();
     }
 
     const updateProfilePage =

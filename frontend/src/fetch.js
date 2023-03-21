@@ -54,8 +54,6 @@ export function fetchPUT(req, bodyInfo, err) {
     .then((res) => {
       if (req === "user/watch" && res.status === 400) {
         alert("no user exist");
-      } else if (req === "user/watch" && res.status === 200) {
-        alert("watch user successfully");
       }
     })
     .catch(() => {

@@ -4,8 +4,8 @@ import { fetchGET, fetchPUT } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
 import { analyzeTime } from "./feed.js";
 
-export function getWatchingUser(userId, watchedList) {
-  // copy and process the template
+// copy and process the template
+function getWatchingUser(userId, watchedList, newProfile) {
   const userNode = document
     .getElementById("like-user-template")
     .cloneNode(true);
@@ -26,9 +26,11 @@ export function getWatchingUser(userId, watchedList) {
     }
     watchedList.appendChild(userNode);
 
-    // userNameNode.addEventListener("click", () => {
-    //     renderProfile(userNameNode.textContent);
-    // });
+    // remove current profile to render an new profile
+    userNameNode.addEventListener("click", () => {
+      newProfile.remove();
+      renderProfile(userNameNode.textContent);
+    });
   }
 
   fetchGET(
@@ -38,52 +40,61 @@ export function getWatchingUser(userId, watchedList) {
   );
 }
 
-export function clearWatchList() {
-  // clear watching list to re-render next time
-  const childList = document
-    .getElementById("profile-watched-by-list")
-    .querySelectorAll("div");
+// clear watching list to re-render next time
+function clearWatchList(newProfile) {
+  const childList = newProfile.childNodes[3].querySelectorAll("div");
 
   for (let item of childList) {
     item.remove();
   }
 }
 
-export function processUserInfo(data) {
-  // remove homepage and render profile page
-  document.getElementById("profile-page").classList.remove("Hidden");
-  document.getElementById("homepage-content").classList.add("Hidden");
-
-  const imgNode = document.getElementById("profile-user-img");
+// set up all user info
+function processUserInfo(data, newProfile) {
+  const userInfo = newProfile.childNodes[1];
+  const userImg = userInfo.childNodes[1];
+  // if user doesn't have img, replace with a sample img
   if (data.image !== undefined) {
-    imgNode.src = data.image;
+    userImg.src = data.image;
   } else {
-    imgNode.src = "./../sample-user.png";
+    userImg.src = "./../sample-user.png";
   }
-  document.getElementById("profile-user-name").textContent = data.name;
-  document.getElementById("profile-user-id").textContent = data.id;
 
-  document.getElementById("profile-user-email").textContent = data.email;
-  document.getElementById("profile-user-watched-by").textContent =
+  // process user info
+  const userName = userInfo.childNodes[3];
+  userName.textContent = data.name;
+
+  const userId = userInfo.childNodes[5];
+  userId.textContent = data.id;
+
+  const userEmail = userInfo.childNodes[7];
+  userEmail.textContent = data.email;
+
+  const userWatchBy = userInfo.childNodes[9];
+  userWatchBy.textContent =
     "watched by " +
     data.watcheeUserIds.length +
     (data.watcheeUserIds.length <= 1 ? " user" : " users");
-  // process user info
+}
 
-  clearWatchList();
-  const watchedList = document.getElementById("profile-watched-by-list");
-
+// process all watch user
+function processWatchList(data, newProfile) {
+  const watchedList = newProfile.childNodes[3];
   let watcheeListIds = data.watcheeUserIds;
   // update user info for each watching user
   for (const user of watcheeListIds) {
-    getWatchingUser(user, watchedList);
+    getWatchingUser(user, watchedList, newProfile);
   }
+}
 
-  // check whether we have watched this user
+// process watch button
+function processWatchButton(data, newProfile) {
+  const watchButton = newProfile.childNodes[5];
+  let watcheeListIds = data.watcheeUserIds;
+  const watchedList = newProfile.childNodes[3];
   const myId = Number(localStorage.getItem("loginUser"));
 
   // set the default field of button to watch
-  const watchButton = document.getElementById("watch-and-unwatch-user");
   watchButton.textContent = "watch";
 
   // check whether the current profile we view is our own profile
@@ -102,36 +113,15 @@ export function processUserInfo(data) {
     }
   }
 
-  // statr process jobs
-}
-
-// export function processCloseButton() {
-//   // config button to close profile
-//   const closeButton = document.getElementById("close-profile");
-
-//   // remove profile page and render homepage
-//   closeButton.addEventListener("click", () => {
-//     document.getElementById("profile-page").classList.add("Hidden");
-//     document.getElementById("homepage-content").classList.remove("Hidden");
-//   });
-// }
-
-export function processWatchButton(data) {
-  const watchButton = document.getElementById("watch-and-unwatch-user");
-  let watcheeListIds = data.watcheeUserIds;
-  const watchedList = document.getElementById("profile-watched-by-list");
-  const myId = Number(localStorage.getItem("loginUser"));
-
-  function myfunc() {
-    // define this function so that we can delete the eventhandler later
+  watchButton.addEventListener("click", () => {
     if (watchButton.textContent == "unwatch") {
       // we have watched this user
       watchButton.textContent = "watch";
 
-      clearWatchList();
+      // delete our userId in watch list array
+      clearWatchList(newProfile);
       const index = watcheeListIds.indexOf(myId);
       watcheeListIds.splice(index, 1);
-      // delete our userId in watch list array
 
       for (const user of watcheeListIds) {
         getWatchingUser(user, watchedList);
@@ -148,7 +138,7 @@ export function processWatchButton(data) {
       watcheeListIds.push(myId);
 
       // re-render watch
-      clearWatchList();
+      clearWatchList(newProfile);
       for (const user of watcheeListIds) {
         getWatchingUser(user, watchedList);
       }
@@ -160,31 +150,11 @@ export function processWatchButton(data) {
         "error happens when sending watch request to server"
       );
     }
-  }
-  // remove event listerner for previous profile
-  watchButton.removeEventListener("click", myfunc);
-
-  // add event listerner for current profile
-  watchButton.addEventListener("click", myfunc);
-
-  setTimeout(() => {
-    // we need to set timeout to wait for asynchronous operation
-    const watchedList = document
-      .getElementById("profile-watched-by-list")
-      .getElementsByClassName("User-name");
-
-    for (let item of watchedList) {
-      item.addEventListener("click", () => {
-        watchButton.removeEventListener("click", myfunc);
-        // we need to delete the original event handler for watch button, otherwise we will send to
-        // request to server after we switch to another user
-        renderProfile(item.textContent);
-      });
-    }
-  }, 100);
+  });
 }
 
-export function processJob(data) {
+// process each job
+function processJob(data, newProfile) {
   const jobs = data.jobs;
   for (let job of jobs) {
     const newJob = document.createElement("div");
@@ -216,18 +186,29 @@ export function processJob(data) {
     newJob.append(PostContent);
     newJob.append(PostImg);
 
-    document.getElementById("profile-jobs-info").append(newJob);
+    newProfile.childNodes[7].append(newJob);
     // append new job to container
   }
 }
 
-export function renderProfile(userName) {
+function renderProfile(userName) {
   function suecessFecthInfo(data) {
     // bug exists when jump and watch between different users
-    processUserInfo(data);
-    processJob(data);
-    processWatchButton(data);
-    // processCloseButton();
+    // remove homepage and show profile
+    document.getElementById("homepage-content").classList.add("Hidden");
+
+    const newProfile = document.getElementById("profile-page").cloneNode(true);
+    newProfile.classList.remove("Hidden");
+    newProfile.removeAttribute("id");
+    newProfile.setAttribute("id", "real-profile");
+    // build a new profile from template profile
+
+    processUserInfo(data, newProfile);
+    processWatchList(data, newProfile);
+    processWatchButton(data, newProfile);
+    processJob(data, newProfile);
+
+    document.getElementById("homepage").append(newProfile);
   }
 
   const userId = localStorage.getItem(userName);
@@ -238,6 +219,7 @@ export function renderProfile(userName) {
   );
 }
 
+// config every element with User-name class name in post section
 export function addEventForEachName(newPost) {
   const userArr = newPost.getElementsByClassName("User-name");
   for (const ele of userArr) {
@@ -248,6 +230,7 @@ export function addEventForEachName(newPost) {
   }
 }
 
+// config profile for element at side bar
 export function addEventForMyname() {
   // config "my profile" of side bar to render my own profile
   const myProfile = document.getElementById("my-profile");
@@ -258,6 +241,7 @@ export function addEventForMyname() {
   });
 }
 
+// config update user profile button at top bar
 export function updateProfile() {
   const updateProfileButton = document.getElementById("update-profile-button");
   const closeProfileButton = document.getElementById("close-upload-window");
@@ -311,6 +295,7 @@ export function updateProfile() {
   });
 }
 
+// config search bar to watch specific user via email
 export function watchUserByBar() {
   const watchUserButton = document.getElementById("watch-user");
   const searchBarDiv = document.getElementById("search-div");
