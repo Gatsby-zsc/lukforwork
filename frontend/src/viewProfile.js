@@ -19,7 +19,11 @@ export function getWatchingUser(userId, watchedList) {
     localStorage.setItem(data.name, data.id);
     localStorage.setItem(data.id, data.name);
     userNameNode.textContent = data.name;
-    userImgNode.src = data.image;
+    if (data.image !== undefined) {
+      userImgNode.src = data.image;
+    } else {
+      userImgNode.src = "./../sample-user.png";
+    }
     watchedList.appendChild(userNode);
 
     // userNameNode.addEventListener("click", () => {
@@ -50,7 +54,12 @@ export function processUserInfo(data) {
   document.getElementById("profile-page").classList.remove("Hidden");
   document.getElementById("homepage-content").classList.add("Hidden");
 
-  document.getElementById("profile-user-img").src = data.image;
+  const imgNode = document.getElementById("profile-user-img");
+  if (data.image !== undefined) {
+    imgNode.src = data.image;
+  } else {
+    imgNode.src = "./../sample-user.png";
+  }
   document.getElementById("profile-user-name").textContent = data.name;
   document.getElementById("profile-user-id").textContent = data.id;
 

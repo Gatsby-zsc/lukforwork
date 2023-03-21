@@ -171,7 +171,11 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
 
 export function renderUserImge(imgNode, userId) {
   function successFetchImg(data) {
-    imgNode.src = data.image;
+    if (data.image !== undefined) {
+      imgNode.src = data.image;
+    } else {
+      imgNode.src = "./../sample-user.png";
+    }
   }
 
   fetchGET(
@@ -183,7 +187,6 @@ export function renderUserImge(imgNode, userId) {
 
 export function renderEachPost(postInfo) {
   // render all information for each post
-  // console.log(postInfo);
   let oldPost = document.getElementById("post-template");
   let newPost = oldPost.cloneNode(true);
   newPost.removeAttribute("id");
