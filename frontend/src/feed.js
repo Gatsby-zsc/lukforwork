@@ -53,6 +53,7 @@ export function processUserLikes(user, likeUsers) {
     .getElementById("like-user-template")
     .cloneNode(true);
   userNode.removeAttribute("id");
+  userNode.classList.remove("Hidden");
 
   const userImgNode = userNode.childNodes[1];
   const userNameNode = userNode.childNodes[3];
@@ -66,16 +67,17 @@ export function processUserLikes(user, likeUsers) {
 }
 
 export function processEachComment(comment, commentContent) {
-  let node = document.getElementById("comment-template").cloneNode(true);
-  node.removeAttribute("id");
+  let commentNode = document.getElementById("comment-template").cloneNode(true);
+  commentNode.removeAttribute("id");
+  commentNode.classList.remove("Hidden");
 
-  const userImgNode = node.childNodes[1];
+  const userImgNode = commentNode.childNodes[1];
   const userId = localStorage.getItem(comment.userName);
   renderUserImge(userImgNode, userId);
   // add user img for each user
-  node.childNodes[3].childNodes[1].textContent = comment.userName;
-  node.childNodes[3].childNodes[3].textContent = comment.comment;
-  commentContent.appendChild(node);
+  commentNode.childNodes[3].childNodes[1].textContent = comment.userName;
+  commentNode.childNodes[3].childNodes[3].textContent = comment.comment;
+  commentContent.appendChild(commentNode);
 }
 
 export function getNumberUserLikes(likeStr) {
@@ -127,7 +129,7 @@ export function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
   if (likeList.includes(loginUser) === false) {
     likeButton.textContent = "Like";
   } else {
-    likeButton.textContent = "Unliket";
+    likeButton.textContent = "Unlike";
   }
 
   likeButton.addEventListener("click", () => {
@@ -233,6 +235,11 @@ export function renderEachPost(postInfo) {
   localStorage.setItem(likeMemberList, userStr);
 
   jobLikes.addEventListener("click", () => {
+    // modify later
+    // if (postInfo.likes.length === 0) {
+    //     return;
+    // }
+
     // implement a toggle to switch between hide and show
     if (likeUsers.classList.contains("Hidden")) {
       likeUsers.classList.remove("Hidden");

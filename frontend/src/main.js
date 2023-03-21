@@ -10,19 +10,19 @@ localStorage.clear();
 localStorage.setItem("Page", 0);
 
 signInButton.addEventListener("click", () => {
-    login();
+  login();
 });
 
 const registerButton = document.getElementById("register-button");
 registerButton.addEventListener("click", () => {
-    registration();
+  registration();
 });
 
 // sign in switch register
 document.getElementById("switch-join-btn").addEventListener("click", () => {
-    swap("login-interface", "registration-interface");
+  swap("login-interface", "registration-interface");
 });
 
 document.getElementById("switch-sign-btn").addEventListener("click", () => {
-    swap("registration-interface", "login-interface");
+  swap("registration-interface", "login-interface");
 });

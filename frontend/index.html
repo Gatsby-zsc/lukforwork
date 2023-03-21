@@ -130,7 +130,7 @@
           <button>Home</button>
           <button>My Network</button>
           <button>Jobs</button>
-          <button>Me</button>
+          <button>Update my profile</button>
         </div>
       </header>
 
@@ -211,12 +211,12 @@
       </main>
     </div>
 
-    <div id="like-user-template" class="Each-user-watching">
+    <div id="like-user-template" class="Each-user-watching Hidden">
       <img class="User-img" />
       <span class="Like-name User-name"></span>
     </div>
 
-    <div id="comment-template" class="Each-comment">
+    <div id="comment-template" class="Each-comment Hidden">
       <img class="User-img User-name" />
       <div class="Comment-content">
         <span class="User-post-comment User-name"></span>
@@ -227,21 +227,21 @@
     <!-- popup window each time we render user profile -->
     <!-- touch the top search bar should also inspect the email you search for , if exist render this page, if not popup error-->
     <div id="profile-page" class="Hidden">
+      <!-- <button id="close-profile">close profile window</button> -->
       <div id="profile-user-info">
         <img id="profile-user-img" alt="user image" />
         <div id="profile-user-name" class="User-name"></div>
         <!-- Id is only used to show the name -->
-        <!-- <div id="profile-user-id"></div> -->
+        <div id="profile-user-id"></div>
         <div id="profile-user-email"></div>
         <div id="profile-user-watched-by"></div>
-        <button id="watch-and-unwatch-user"></button>
       </div>
       <div id="profile-watched-by-list-div">
         <div id="profile-watched-by-list"></div>
       </div>
       <div id="profile-jobs-info"></div>
       <!--When click the top left side Work logo, hiiden the profile-page  -->
-      <!-- <button id="close-profile">close profile window</button> -->
+      <button id="watch-and-unwatch-user"></button>
     </div>
 
     <!-- When click on the top menu bar "me" button show this block as a toggle -->
@@ -255,6 +255,7 @@
       <label for="new-img">Your new image</label><br />
       <input type="file" id="new-img" /><br />
       <button id="upload-info">update profile</button>
+      <button id="close-upload-window">close window</button>
     </div>
 
     <div id="error-box" class="Hidden">

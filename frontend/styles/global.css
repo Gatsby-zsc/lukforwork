@@ -524,10 +524,8 @@ body {
   margin: 0 auto;
 }
 
-#profile-template {
-  position: fixed;
-  top: 40vh;
-  left: 38vw;
+#profile-page {
+  margin-top: 200px;
   border: thick double #32a1ce;
   background-color: #ffffff;
 }
