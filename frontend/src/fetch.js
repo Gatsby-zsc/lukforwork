@@ -93,3 +93,20 @@ export function fetchDelete(req, postId) {
     }
   });
 }
+
+// update post into server
+export function fetchModi(req, postDetail) {
+  fetch("http://localhost:5005/" + req, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(postDetail),
+  }).then((res) => {
+    if (res.status === 200) {
+      alert("Post modified successfully");
+    }
+  });
+}

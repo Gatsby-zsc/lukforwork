@@ -3,7 +3,7 @@ import { errorPopup } from "./error_handle.js";
 import { fetchGET, fetchPut } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
 import { analyzeTime } from "./feed.js";
-import { delPost } from "./newPut.js";
+import { delPost, modiPost } from "./newPut.js";
 
 // copy and process the template
 function getWatchingUser(userId, watchedList, newProfile) {
@@ -169,6 +169,7 @@ function processJob(data, newProfile) {
     const PostContent = newJobNode.childNodes[1].cloneNode(true);
     const PostImg = newJobNode.childNodes[3].cloneNode(true);
     const postDel = newJobNode.childNodes[5].cloneNode(true);
+    const postModi = newJobNode.childNodes[7].cloneNode(true);
 
     // Job-post-date
     PostContent.childNodes[1].textContent = analyzeTime(job.createdAt);
@@ -195,6 +196,8 @@ function processJob(data, newProfile) {
     if (myId == job.creatorId) {
       newJob.append(postDel);
       delPost(job.id, postDel, newJob);
+      newJob.append(postModi);
+      modiPost(job.id, postModi);
     }
 
     newProfile.childNodes[7].append(newJob);
