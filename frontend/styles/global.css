@@ -345,11 +345,14 @@ body {
       "posts";
     column-gap: 22px;
   }
+  #work-news {
+    display: none;
+  }
 }
 
 @media (max-width: 500px) {
   #homepage-content {
-    width: 400px;
+    width: 90%;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;

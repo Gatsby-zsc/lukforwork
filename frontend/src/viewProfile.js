@@ -165,10 +165,10 @@ function processJob(data, newProfile) {
       .cloneNode(true);
     newJobNode.classList.remove("Hidden");
 
+    // clone necessary node from post-template
     const PostContent = newJobNode.childNodes[1].cloneNode(true);
     const PostImg = newJobNode.childNodes[3].cloneNode(true);
     const postDel = newJobNode.childNodes[5].cloneNode(true);
-    // clone necessary node from post-template
 
     // Job-post-date
     PostContent.childNodes[1].textContent = analyzeTime(job.createdAt);
@@ -187,8 +187,15 @@ function processJob(data, newProfile) {
 
     newJob.append(PostContent);
     newJob.append(PostImg);
-    newJob.append(postDel);
-    delPost(job.id, postDel, newJob);
+
+    // check we are the person to delete our own posts
+    const myId = localStorage.getItem("loginUser");
+
+    // do not show delete button
+    if (myId == job.creatorId) {
+      newJob.append(postDel);
+      delPost(job.id, postDel, newJob);
+    }
 
     newProfile.childNodes[7].append(newJob);
     // append new job to container
