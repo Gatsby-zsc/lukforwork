@@ -42,7 +42,7 @@ export function fetchGET(req, success, err) {
     });
 }
 
-export function fetchPUT(req, bodyInfo, err) {
+export function fetchPut(req, bodyInfo, err) {
   fetch(`http://localhost:5005/` + req, {
     method: "PUT",
     headers: {
@@ -61,4 +61,35 @@ export function fetchPUT(req, bodyInfo, err) {
     });
 }
 
-export function fetchDELETE() {}
+// function of make a post or comment into server
+export function fetchPost(req, postDetail) {
+  fetch("http://localhost:5005/" + req, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(postDetail),
+  }).then((res) => {
+    if (res.status === 200) {
+      alert("Post put successfully");
+    }
+  });
+}
+
+export function fetchDelete(req, postId) {
+  fetch("http://localhost:5005/" + req, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      accept: "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(postId),
+  }).then((res) => {
+    if (res.status === 200) {
+      alert("Delete successfully");
+    }
+  });
+}

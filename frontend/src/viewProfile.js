@@ -1,8 +1,9 @@
 // this file is for mileston4, related to how to render user profile
 import { errorPopup } from "./error_handle.js";
-import { fetchGET, fetchPUT } from "./fetch.js";
+import { fetchGET, fetchPut } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
 import { analyzeTime } from "./feed.js";
+import { delPost } from "./newPut.js";
 
 // copy and process the template
 function getWatchingUser(userId, watchedList, newProfile) {
@@ -128,7 +129,7 @@ function processWatchButton(data, newProfile) {
       }
 
       // send put request to server
-      fetchPUT(
+      fetchPut(
         "user/watch",
         { email: data.email, turnon: false },
         "error happens when sending unwatch request to server"
@@ -144,7 +145,7 @@ function processWatchButton(data, newProfile) {
       }
 
       // send put request to server
-      fetchPUT(
+      fetchPut(
         "user/watch",
         { email: data.email, turnon: true },
         "error happens when sending watch request to server"
@@ -166,6 +167,7 @@ function processJob(data, newProfile) {
 
     const PostContent = newJobNode.childNodes[1].cloneNode(true);
     const PostImg = newJobNode.childNodes[3].cloneNode(true);
+    const postDel = newJobNode.childNodes[5].cloneNode(true);
     // clone necessary node from post-template
 
     // Job-post-date
@@ -185,6 +187,8 @@ function processJob(data, newProfile) {
 
     newJob.append(PostContent);
     newJob.append(PostImg);
+    newJob.append(postDel);
+    delPost(job.id, postDel, newJob);
 
     newProfile.childNodes[7].append(newJob);
     // append new job to container
@@ -273,7 +277,7 @@ export function updateProfile() {
 
     fileToDataUrl(newImg)
       .then((data) => {
-        fetchPUT(
+        fetchPut(
           "user",
           {
             email: newEmail,
@@ -328,7 +332,7 @@ export function watchUserByBar() {
     if (key.code === "Enter") {
       const emailField = searchBar.value;
       if (emailField !== "") {
-        fetchPUT(
+        fetchPut(
           "user/watch",
           { email: emailField, turnon: true },
           "error happens when watch user via email"

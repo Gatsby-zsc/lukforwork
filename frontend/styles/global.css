@@ -256,7 +256,7 @@ body {
 .Feed-border {
   margin: 8px 0 8px 0;
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 #post {
@@ -269,9 +269,6 @@ body {
 #posts-div {
   grid-area: posts;
 }
-#news {
-  grid-area: aside;
-}
 
 #user-window,
 #news {
@@ -281,9 +278,44 @@ body {
 
 #homepage-content {
   display: grid;
-  grid-template-columns: 300px auto 300px;
-  grid-template-areas: "sidebar posts aside";
+  grid-template-columns: 300px auto;
+  grid-template-areas: "sidebar posts";
   column-gap: 22px;
+}
+
+#work-news {
+  padding: 10px 0 10px 0;
+}
+
+.New-top-title {
+  font-size: 16px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.New-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 5px;
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: inside;
+  padding-left: 10px;
+  padding-top: 5px;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.News-list:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.New-time {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 2px;
+  padding-left: 26.5px;
+  padding-bottom: 5px;
 }
 
 @media (max-width: 1200px) {
@@ -297,23 +329,33 @@ body {
     width: 720px;
     display: grid;
     grid-template-columns: 300px auto;
-    grid-template-areas:
-      "sidebar posts"
-      ". aside";
+    grid-template-areas: "sidebar posts";
     column-gap: 22px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   #homepage-content {
-    width: 576px;
+    width: 500px;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
     grid-template-areas:
       "sidebar"
-      "posts"
-      "aside";
+      "posts";
+    column-gap: 22px;
+  }
+}
+
+@media (max-width: 500px) {
+  #homepage-content {
+    width: 400px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "sidebar"
+      "posts";
     column-gap: 22px;
   }
 }
@@ -455,12 +497,12 @@ body {
   margin: 0px 14px;
   padding: 4px 0;
   color: rgba(0, 0, 0, 0.9);
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .Comment-list {
   margin: 0 14px;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .Each-comment {
@@ -490,7 +532,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .Like,
@@ -499,13 +541,13 @@ body {
   background-color: #ffffff;
   align-items: center;
   padding: 0 20px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 5px;
 }
 
 .Like:hover,
 .Comment:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.15);
   align-items: center;
   padding: 0 20px;
   cursor: pointer;

@@ -1,6 +1,7 @@
-import { fetchGET, fetchPUT } from "./fetch.js";
+import { fetchGET, fetchPut } from "./fetch.js";
 import { addEventForEachName, addEventForMyname } from "./viewProfile.js";
 import { homeButton, updateProfileButton, searchBar } from "./topBar.js";
+import { makePost, makeComment } from "./newPut.js";
 
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
   function getAllInfo(data) {
@@ -34,7 +35,7 @@ export function analyzeTime(date) {
     retTime = retTime.substring(0, 10).split("-");
     retTime = retTime[2] + "/" + retTime[1] + "/" + retTime[0];
     return retTime;
-  } else if (3_600_000 < timeStamp < 86_400_000) {
+  } else if (timeStamp > 3_600_000 && timeStamp < 86_400_000) {
     // post within 24 hours
     const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
     const hours = Math.trunc(timeStamp / 3_600_000);
@@ -136,7 +137,7 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
     const likeList = getMemberLikeList(postInfo.id);
     const userList = likeUsers.querySelectorAll("div");
     if (likeList.includes(loginUser) === true) {
-      fetchPUT(
+      fetchPut(
         "job/like",
         { id: postInfo.id, turnon: false },
         "Error happens when sending unlike request"
@@ -154,7 +155,7 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
 
       jobLikes.textContent = "Like: " + currentNumberUserLike;
     } else {
-      fetchPUT(
+      fetchPut(
         "job/like",
         { id: postInfo.id, turnon: true },
         "Error happens when sending like request"
@@ -191,6 +192,11 @@ export function renderEachPost(postInfo) {
   let oldPost = document.getElementById("post-template");
   let newPost = oldPost.cloneNode(true);
   newPost.removeAttribute("id");
+  let liTem = document.getElementById("li-template");
+  let newLi = liTem.cloneNode(true);
+  newLi.removeAttribute("id");
+  newLi.classList.remove("Hidden");
+
   const creatorContent = newPost.childNodes[1];
   const postContent = newPost.childNodes[3];
 
@@ -208,6 +214,14 @@ export function renderEachPost(postInfo) {
 
   const jobTitle = postContent.childNodes[1];
   jobTitle.textContent = postInfo.title;
+
+  // News --->
+  const newLiTitle = newLi.childNodes[1];
+  newLiTitle.textContent = postInfo.title;
+  const newLiDate = newLi.childNodes[3];
+  newLiDate.textContent = analyzeTime(postInfo.createdAt);
+  document.getElementById("work-news").insertBefore(newLi, liTem);
+  // <---
 
   const startDate = postContent.childNodes[3];
   startDate.textContent = "Start at " + analyzeTime(postInfo.start);
@@ -272,7 +286,16 @@ export function renderEachPost(postInfo) {
 
   const functionSection = likeAndComment.childNodes[7];
   const likeButton = functionSection.childNodes[1];
-  const secondButton = functionSection.childNodes[3];
+  const commentBtn = functionSection.childNodes[3];
+
+  commentBtn.addEventListener("click", () => {
+    const commentDiv = document.getElementById("make-comment");
+    commentDiv.classList.remove("Hidden");
+    document.getElementById("new-comment").value = "";
+    makeComment(postInfo.id, commentDiv);
+  });
+
+  // makeComment(commentBtn);
   likeJob(likeButton, postInfo, jobLikes, likeUsers);
 
   addEventForEachName(newPost);
@@ -294,6 +317,9 @@ export function renderHomePage() {
   homeButton();
   updateProfileButton();
   searchBar();
+
+  // config make post&comment button
+  makePost();
 
   // config side bar
   addEventForMyname();

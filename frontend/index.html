@@ -145,7 +145,13 @@
             <div>Connections</div>
             <div>My items</div>
           </div>
-          <div id="recent-history" class="Homepage-Item">Recent</div>
+          <div id="work-news" class="Homepage-Item">
+            <h2 class="New-top-title">LurkForWork News</h2>
+            <div id="li-template" class="News-list Hidden">
+              <div class="New-title"></div>
+              <div class="New-time"></div>
+            </div>
+          </div>
         </div>
         <div id="posts-div">
           <div id="new-post" class="Homepage-Item">
@@ -208,10 +214,7 @@
           </div>
         </div>
 
-        <div id="news">
-          <div id="work-news" class="Homepage-Item">News</div>
-          <div id="promoted" class="Homepage-Item">Promoted</div>
-        </div>
+        <div id="news"></div>
       </main>
     </div>
 
@@ -223,7 +226,7 @@
         <div class="profile-Job-description"></div>
       </div>
       <img class="profile-Job-image" alt="Job-image" />
-      </div>
+      <div class="delete">...</div>
     </div>
 
     <div id="like-user-template" class="Each-user-watching Hidden">
@@ -244,12 +247,14 @@
     <div id="profile-page" class="Hidden">
       <div id="profile-user-info">
         <img id="profile-user-img" alt="user image" />
-        <div id="profile-user-name" ></div>
+        <div id="profile-user-name"></div>
         <div id="profile-user-id"></div>
         <div id="profile-user-email"></div>
         <div id="profile-user-watched-by"></div>
       </div>
-      <div id="profile-watched-by-list"></div>
+      <div id="profile-watched-by-list-div">
+        <div id="profile-watched-by-list"></div>
+      </div>
       <button id="watch-and-unwatch-user"></button>
       <div id="profile-jobs-info"></div>
       <!--When click the top left side Work logo, hiiden the profile-page  -->
@@ -267,6 +272,25 @@
       <input type="file" id="new-img" /><br />
       <button id="upload-info">update profile</button>
       <button id="close-upload-window">close window</button>
+    </div>
+
+    <div id="make-post-struc" class="Hidden">
+      <label for="post-header">Post Header</label>
+      <input type="text" id="post-header" /><br />
+      <label for="post-content">Post content</label>
+      <input type="text" id="post-content" /><br />
+      <label for="post-start">Start Time</label>
+      <input type="datetime-local" id="post-start" /><br />
+      <label for="post-img">Your image</label><br />
+      <input type="file" id="post-img" /><br />
+      <button id="upload-post">Make a Post</button><br />
+      <button id="close-post-window">close window</button>
+    </div>
+
+    <div id="make-comment" class="Hidden">
+      <span>Input your comment</span><br />
+      <input type="text" id="new-comment" />
+      <div id="post-new-comment">Post</div>
     </div>
 
     <div id="error-box" class="Hidden">
