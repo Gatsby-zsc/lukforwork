@@ -1,338 +1,349 @@
 import { fetchGET, fetchPut } from "./fetch.js";
 import { addEventForEachName, addEventForMyname } from "./viewProfile.js";
 import { homeButton, updateProfileButton, searchBar } from "./topBar.js";
-import { makePost, makeComment } from "./newPut.js";
+import {
+    makePost,
+    makeComment,
+    closePostWindow,
+    updatePostButton,
+} from "./newPut.js";
 
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
-  function getAllInfo(data) {
-    localStorage.setItem(data.name, data.id);
-    localStorage.setItem(data.id, data.name);
-    creatorName.textContent = data.name;
+    function getAllInfo(data) {
+        localStorage.setItem(data.name, data.id);
+        localStorage.setItem(data.id, data.name);
+        creatorName.textContent = data.name;
 
-    data.watcheeUserIds.length == 1
-      ? (creatorFollowers.textContent =
-          data.watcheeUserIds.length + " follower")
-      : (creatorFollowers.textContent =
-          data.watcheeUserIds.length + " followers");
-  }
+        data.watcheeUserIds.length == 1
+            ? (creatorFollowers.textContent =
+                  data.watcheeUserIds.length + " follower")
+            : (creatorFollowers.textContent =
+                  data.watcheeUserIds.length + " followers");
+    }
 
-  fetchGET(
-    `user?userId=${creatorId}`,
-    getAllInfo,
-    "error when getting cretator info"
-  );
+    fetchGET(
+        `user?userId=${creatorId}`,
+        getAllInfo,
+        "error when getting cretator info"
+    );
 }
 
 // parse time
 export function analyzeTime(date) {
-  const currentTime = Date.now();
-  const postTime = Date.parse(date);
-  const timeStamp = currentTime - postTime;
+    const currentTime = Date.now();
+    const postTime = Date.parse(date);
+    const timeStamp = currentTime - postTime;
 
-  if (timeStamp > 86_400_000) {
-    // post 24 hours ago
-    let retTime = new Date(postTime).toISOString();
-    retTime = retTime.substring(0, 10).split("-");
-    retTime = retTime[2] + "/" + retTime[1] + "/" + retTime[0];
-    return retTime;
-  } else if (timeStamp > 3_600_000 && timeStamp < 86_400_000) {
-    // post within 24 hours
-    const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
-    const hours = Math.trunc(timeStamp / 3_600_000);
-    return hours + " hours " + minutes + " minutes ago";
-  } else {
-    // post within last 1 hour
-    const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
-    return minutes + " minutes ago";
-  }
+    if (timeStamp > 86_400_000) {
+        // post 24 hours ago
+        let retTime = new Date(postTime).toISOString();
+        retTime = retTime.substring(0, 10).split("-");
+        retTime = retTime[2] + "/" + retTime[1] + "/" + retTime[0];
+        return retTime;
+    } else if (timeStamp > 3_600_000 && timeStamp < 86_400_000) {
+        // post within 24 hours
+        const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
+        const hours = Math.trunc(timeStamp / 3_600_000);
+        return hours + " hours " + minutes + " minutes ago";
+    } else {
+        // post within last 1 hour
+        const minutes = Math.trunc((timeStamp % 3_600_000) / 60_000);
+        return minutes + " minutes ago";
+    }
 }
 
 export function processUserLikes(user, likeUsers) {
-  const userNode = document
-    .getElementById("like-user-template")
-    .cloneNode(true);
-  userNode.removeAttribute("id");
-  userNode.classList.remove("Hidden");
+    const userNode = document
+        .getElementById("like-user-template")
+        .cloneNode(true);
+    userNode.removeAttribute("id");
+    userNode.classList.remove("Hidden");
 
-  const userImgNode = userNode.childNodes[1];
-  const userNameNode = userNode.childNodes[3];
+    const userImgNode = userNode.childNodes[1];
+    const userNameNode = userNode.childNodes[3];
 
-  const userId = localStorage.getItem(user);
-  renderUserImge(userImgNode, userId);
+    const userId = localStorage.getItem(user);
+    renderUserImge(userImgNode, userId);
 
-  userNameNode.textContent = user;
+    userNameNode.textContent = user;
 
-  likeUsers.appendChild(userNode);
+    likeUsers.appendChild(userNode);
 }
 
 function processEachComment(comment, commentContent) {
-  let commentNode = document.getElementById("comment-template").cloneNode(true);
-  commentNode.removeAttribute("id");
-  commentNode.classList.remove("Hidden");
+    let commentNode = document
+        .getElementById("comment-template")
+        .cloneNode(true);
+    commentNode.removeAttribute("id");
+    commentNode.classList.remove("Hidden");
 
-  const userImgNode = commentNode.childNodes[1];
-  const userId = localStorage.getItem(comment.userName);
-  renderUserImge(userImgNode, userId);
-  // add user img for each user
-  commentNode.childNodes[3].childNodes[1].textContent = comment.userName;
-  commentNode.childNodes[3].childNodes[3].textContent = comment.comment;
-  commentContent.appendChild(commentNode);
+    const userImgNode = commentNode.childNodes[1];
+    const userId = localStorage.getItem(comment.userName);
+    renderUserImge(userImgNode, userId);
+    // add user img for each user
+    commentNode.childNodes[3].childNodes[1].textContent = comment.userName;
+    commentNode.childNodes[3].childNodes[3].textContent = comment.comment;
+    commentContent.appendChild(commentNode);
 }
 
 function getNumberUserLikes(likeStr) {
-  const processedStr = likeStr.split(" ");
-  let currentNumber = Number(processedStr[1]);
-  return currentNumber;
+    const processedStr = likeStr.split(" ");
+    let currentNumber = Number(processedStr[1]);
+    return currentNumber;
 }
 
 function getMemberLikeList(postInfoid) {
-  let rawArr = localStorage.getItem(`${postInfoid} Member List`).split(" ");
-  let retArr = [];
-  for (const item of rawArr) {
-    if (item !== "") {
-      retArr.push(item);
+    let rawArr = localStorage.getItem(`${postInfoid} Member List`).split(" ");
+    let retArr = [];
+    for (const item of rawArr) {
+        if (item !== "") {
+            retArr.push(item);
+        }
     }
-  }
-  return retArr;
+    return retArr;
 }
 
 function removeUserFromLikes(loginUser, likeList, postInfoid) {
-  let retStr = "";
-  for (const item of likeList) {
-    if (item !== loginUser) {
-      retStr = retStr + " " + item;
+    let retStr = "";
+    for (const item of likeList) {
+        if (item !== loginUser) {
+            retStr = retStr + " " + item;
+        }
     }
-  }
 
-  const likeMemberList = postInfoid + " Member List";
-  localStorage.setItem(likeMemberList, retStr);
+    const likeMemberList = postInfoid + " Member List";
+    localStorage.setItem(likeMemberList, retStr);
 }
 
 function addUserintoLikes(loginUser, likeList, postInfoid) {
-  let retStr = "";
-  retStr = retStr + " " + loginUser;
-  for (const item of likeList) {
-    retStr = retStr + " " + item;
-  }
+    let retStr = "";
+    retStr = retStr + " " + loginUser;
+    for (const item of likeList) {
+        retStr = retStr + " " + item;
+    }
 
-  const likeMemberList = postInfoid + " Member List";
-  localStorage.setItem(likeMemberList, retStr);
+    const likeMemberList = postInfoid + " Member List";
+    localStorage.setItem(likeMemberList, retStr);
 }
 
 function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
-  // request like this post to server
-  const loginUser = localStorage.getItem("loginUser");
-  const likeList = getMemberLikeList(postInfo.id);
-
-  // initialize default field for like button
-  if (likeList.includes(loginUser) === false) {
-    likeButton.textContent = "Like";
-  } else {
-    likeButton.textContent = "Unlike";
-  }
-
-  likeButton.addEventListener("click", () => {
+    // request like this post to server
     const loginUser = localStorage.getItem("loginUser");
-    const userName = localStorage.getItem(loginUser);
     const likeList = getMemberLikeList(postInfo.id);
-    const userList = likeUsers.querySelectorAll("div");
-    if (likeList.includes(loginUser) === true) {
-      fetchPut(
-        "job/like",
-        { id: postInfo.id, turnon: false },
-        "Error happens when sending unlike request"
-      );
-      removeUserFromLikes(loginUser, likeList, postInfo.id);
-      likeButton.textContent = "Like";
-      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) - 1;
 
-      for (let item of userList) {
-        if (item.childNodes[3].textContent == userName) {
-          item.remove();
-          // delete user who just like the post
-        }
-      }
-
-      jobLikes.textContent = "Like: " + currentNumberUserLike;
+    // initialize default field for like button
+    if (likeList.includes(loginUser) === false) {
+        likeButton.textContent = "Like";
     } else {
-      fetchPut(
-        "job/like",
-        { id: postInfo.id, turnon: true },
-        "Error happens when sending like request"
-      );
-      addUserintoLikes(loginUser, likeList, postInfo.id);
-      likeButton.textContent = "Unlike";
-      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) + 1;
-
-      processUserLikes(userName, likeUsers);
-
-      jobLikes.textContent = "Like: " + currentNumberUserLike;
+        likeButton.textContent = "Unlike";
     }
-  });
+
+    likeButton.addEventListener("click", () => {
+        const loginUser = localStorage.getItem("loginUser");
+        const userName = localStorage.getItem(loginUser);
+        const likeList = getMemberLikeList(postInfo.id);
+        const userList = likeUsers.querySelectorAll("div");
+        if (likeList.includes(loginUser) === true) {
+            fetchPut(
+                "job/like",
+                { id: postInfo.id, turnon: false },
+                "Error happens when sending unlike request"
+            );
+            removeUserFromLikes(loginUser, likeList, postInfo.id);
+            likeButton.textContent = "Like";
+            let currentNumberUserLike =
+                getNumberUserLikes(jobLikes.textContent) - 1;
+
+            for (let item of userList) {
+                if (item.childNodes[3].textContent == userName) {
+                    item.remove();
+                    // delete user who just like the post
+                }
+            }
+
+            jobLikes.textContent = "Like: " + currentNumberUserLike;
+        } else {
+            fetchPut(
+                "job/like",
+                { id: postInfo.id, turnon: true },
+                "Error happens when sending like request"
+            );
+            addUserintoLikes(loginUser, likeList, postInfo.id);
+            likeButton.textContent = "Unlike";
+            let currentNumberUserLike =
+                getNumberUserLikes(jobLikes.textContent) + 1;
+
+            processUserLikes(userName, likeUsers);
+
+            jobLikes.textContent = "Like: " + currentNumberUserLike;
+        }
+    });
 }
 
 function renderUserImge(imgNode, userId) {
-  function successFetchImg(data) {
-    if (data.image !== undefined) {
-      imgNode.src = data.image;
-    } else {
-      imgNode.src = "./../sample-user.png";
+    function successFetchImg(data) {
+        if (data.image !== undefined) {
+            imgNode.src = data.image;
+        } else {
+            imgNode.src = "./../sample-user.png";
+        }
     }
-  }
 
-  fetchGET(
-    `user?userId=${userId}`,
-    successFetchImg,
-    "error happens when fetch user img"
-  );
+    fetchGET(
+        `user?userId=${userId}`,
+        successFetchImg,
+        "error happens when fetch user img"
+    );
 }
 
 export function renderEachPost(postInfo) {
-  // render all information for each post
-  let oldPost = document.getElementById("post-template");
-  let newPost = oldPost.cloneNode(true);
-  newPost.removeAttribute("id");
-  let liTem = document.getElementById("li-template");
-  let newLi = liTem.cloneNode(true);
-  newLi.removeAttribute("id");
-  newLi.classList.remove("Hidden");
+    // render all information for each post
+    let oldPost = document.getElementById("post-template");
+    let newPost = oldPost.cloneNode(true);
+    newPost.removeAttribute("id");
+    let liTem = document.getElementById("li-template");
+    let newLi = liTem.cloneNode(true);
+    newLi.removeAttribute("id");
+    newLi.classList.remove("Hidden");
 
-  const creatorContent = newPost.childNodes[1];
-  const postContent = newPost.childNodes[3];
+    const creatorContent = newPost.childNodes[1];
+    const postContent = newPost.childNodes[3];
 
-  const creatorImg = creatorContent.childNodes[1];
-  renderUserImge(creatorImg, postInfo.creatorId);
+    const creatorImg = creatorContent.childNodes[1];
+    renderUserImge(creatorImg, postInfo.creatorId);
 
-  const creatorName = creatorContent.childNodes[3].childNodes[1];
-  creatorName.classList.add("User-name");
+    const creatorName = creatorContent.childNodes[3].childNodes[1];
+    creatorName.classList.add("User-name");
 
-  const followers = creatorContent.childNodes[3].childNodes[3];
-  processCreatorId(postInfo.creatorId, creatorName, followers);
+    const followers = creatorContent.childNodes[3].childNodes[3];
+    processCreatorId(postInfo.creatorId, creatorName, followers);
 
-  const postDate = creatorContent.childNodes[3].childNodes[5];
-  postDate.textContent = analyzeTime(postInfo.createdAt);
+    const postDate = creatorContent.childNodes[3].childNodes[5];
+    postDate.textContent = analyzeTime(postInfo.createdAt);
 
-  const jobTitle = postContent.childNodes[1];
-  jobTitle.textContent = postInfo.title;
+    const jobTitle = postContent.childNodes[1];
+    jobTitle.textContent = postInfo.title;
 
-  // News --->
-  const newLiTitle = newLi.childNodes[1];
-  newLiTitle.textContent = postInfo.title;
-  const newLiDate = newLi.childNodes[3];
-  newLiDate.textContent = analyzeTime(postInfo.createdAt);
-  document.getElementById("work-news").insertBefore(newLi, liTem);
-  // <---
+    // News --->
+    const newLiTitle = newLi.childNodes[1];
+    newLiTitle.textContent = postInfo.title;
+    const newLiDate = newLi.childNodes[3];
+    newLiDate.textContent = analyzeTime(postInfo.createdAt);
+    document.getElementById("work-news").insertBefore(newLi, liTem);
+    // <---
 
-  const startDate = postContent.childNodes[3];
-  startDate.textContent = "Start at " + analyzeTime(postInfo.start);
+    const startDate = postContent.childNodes[3];
+    startDate.textContent = "Start at " + analyzeTime(postInfo.start);
 
-  const jobDescription = postContent.childNodes[5];
-  jobDescription.textContent = postInfo.description;
+    const jobDescription = postContent.childNodes[5];
+    jobDescription.textContent = postInfo.description;
 
-  const jobImage = newPost.childNodes[5];
-  jobImage.src = postInfo.image;
+    const jobImage = newPost.childNodes[5];
+    jobImage.src = postInfo.image;
 
-  const likeAndComment = newPost.childNodes[7];
+    const likeAndComment = newPost.childNodes[7];
 
-  // like & comment
-  const jobLikes = likeAndComment.childNodes[1].childNodes[1];
-  jobLikes.textContent = "Likes: " + postInfo.likes.length;
+    // like & comment
+    const jobLikes = likeAndComment.childNodes[1].childNodes[1];
+    jobLikes.textContent = "Likes: " + postInfo.likes.length;
 
-  const likeUsers = likeAndComment.childNodes[3];
-  let userStr = "";
-  for (const user of postInfo.likes) {
-    userStr = userStr + " " + user.userId;
-    localStorage.setItem(user.userName, user.userId);
-    localStorage.setItem(user.userId, user.userName);
-    processUserLikes(user.userName, likeUsers);
-  }
-  const likeMemberList = postInfo.id + " Member List";
-  localStorage.setItem(likeMemberList, userStr);
+    const likeUsers = likeAndComment.childNodes[3];
+    let userStr = "";
+    for (const user of postInfo.likes) {
+        userStr = userStr + " " + user.userId;
+        localStorage.setItem(user.userName, user.userId);
+        localStorage.setItem(user.userId, user.userName);
+        processUserLikes(user.userName, likeUsers);
+    }
+    const likeMemberList = postInfo.id + " Member List";
+    localStorage.setItem(likeMemberList, userStr);
 
-  jobLikes.addEventListener("click", () => {
-    const getPostUser = localStorage
-      .getItem(postInfo.id.toString() + " Member List")
-      .split(" ");
+    jobLikes.addEventListener("click", () => {
+        const getPostUser = localStorage
+            .getItem(postInfo.id.toString() + " Member List")
+            .split(" ");
 
-    if (getPostUser.length === 1) {
-      // don't need to show like list
-      return;
+        if (getPostUser.length === 1) {
+            // don't need to show like list
+            return;
+        }
+
+        // implement a toggle to switch between hide and show
+        if (likeUsers.classList.contains("Hidden")) {
+            likeUsers.classList.remove("Hidden");
+        } else {
+            likeUsers.classList.add("Hidden");
+        }
+    });
+
+    const jobComments = likeAndComment.childNodes[1].childNodes[3];
+    jobComments.textContent = "Comments: " + postInfo.comments.length;
+
+    const commentContent = likeAndComment.childNodes[5];
+    for (const comment of postInfo.comments) {
+        processEachComment(comment, commentContent);
     }
 
-    // implement a toggle to switch between hide and show
-    if (likeUsers.classList.contains("Hidden")) {
-      likeUsers.classList.remove("Hidden");
-    } else {
-      likeUsers.classList.add("Hidden");
-    }
-  });
+    jobComments.addEventListener("click", () => {
+        // implement a toggle to switch between hide and show
+        if (commentContent.classList.contains("Hidden")) {
+            commentContent.classList.remove("Hidden");
+        } else {
+            commentContent.classList.add("Hidden");
+        }
+    });
 
-  const jobComments = likeAndComment.childNodes[1].childNodes[3];
-  jobComments.textContent = "Comments: " + postInfo.comments.length;
+    const functionSection = likeAndComment.childNodes[7];
+    const likeButton = functionSection.childNodes[1];
+    const commentBtn = functionSection.childNodes[3];
 
-  const commentContent = likeAndComment.childNodes[5];
-  for (const comment of postInfo.comments) {
-    processEachComment(comment, commentContent);
-  }
+    commentBtn.addEventListener("click", () => {
+        const commentDiv = document.getElementById("make-comment");
+        commentDiv.classList.remove("Hidden");
+        document.getElementById("new-comment").value = "";
+        makeComment(postInfo.id, commentDiv);
+    });
 
-  jobComments.addEventListener("click", () => {
-    // implement a toggle to switch between hide and show
-    if (commentContent.classList.contains("Hidden")) {
-      commentContent.classList.remove("Hidden");
-    } else {
-      commentContent.classList.add("Hidden");
-    }
-  });
+    // makeComment(commentBtn);
+    likeJob(likeButton, postInfo, jobLikes, likeUsers);
 
-  const functionSection = likeAndComment.childNodes[7];
-  const likeButton = functionSection.childNodes[1];
-  const commentBtn = functionSection.childNodes[3];
-
-  commentBtn.addEventListener("click", () => {
-    const commentDiv = document.getElementById("make-comment");
-    commentDiv.classList.remove("Hidden");
-    document.getElementById("new-comment").value = "";
-    makeComment(postInfo.id, commentDiv);
-  });
-
-  // makeComment(commentBtn);
-  likeJob(likeButton, postInfo, jobLikes, likeUsers);
-
-  addEventForEachName(newPost);
-  document.getElementById("post").insertBefore(newPost, oldPost);
-  // insert the newly created node ahead of template node each time
+    addEventForEachName(newPost);
+    document.getElementById("post").insertBefore(newPost, oldPost);
+    // insert the newly created node ahead of template node each time
 }
 
 export function renderHomePage() {
-  document.getElementById("login").classList.add("Hidden");
-  document.getElementById("homepage").classList.remove("Hidden");
-  const renderPost = (data) => {
-    // render each post after we fetch 5 posts from server
-    for (let item of data) {
-      renderEachPost(item);
-    }
-  };
+    document.getElementById("login").classList.add("Hidden");
+    document.getElementById("homepage").classList.remove("Hidden");
+    const renderPost = (data) => {
+        // render each post after we fetch 5 posts from server
+        for (let item of data) {
+            renderEachPost(item);
+        }
+    };
 
-  // config search bar
-  homeButton();
-  updateProfileButton();
-  searchBar();
+    // config search bar
+    homeButton();
+    updateProfileButton();
+    searchBar();
 
-  // config make post&comment button
-  makePost();
+    // config make post&comment button
+    makePost();
+    closePostWindow();
+    updatePostButton();
 
-  // config side bar
-  addEventForMyname();
+    // config side bar
+    addEventForMyname();
 
-  let currentPage = localStorage.getItem("Page");
-  localStorage.setItem("Page", Number(currentPage) + 5);
-  // update page to retrieve next 5 Posts next time
+    let currentPage = localStorage.getItem("Page");
+    localStorage.setItem("Page", Number(currentPage) + 5);
+    // update page to retrieve next 5 Posts next time
 
-  // infinite scroll
+    // infinite scroll of milestone 6
 
-  fetchGET(
-    `job/feed?start=${currentPage}`,
-    renderPost,
-    "error happen when render"
-  );
+    fetchGET(
+        `job/feed?start=${currentPage}`,
+        renderPost,
+        "error happen when render"
+    );
 }
