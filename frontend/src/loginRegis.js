@@ -1,5 +1,5 @@
 import { fetchPOST, fetchGET } from "./fetch.js";
-import { errorPopup } from "./error_handle.js";
+import { errorPopup } from "./errorHandle.js";
 import { renderHomePage } from "./feed.js";
 
 // store user info to reuse later

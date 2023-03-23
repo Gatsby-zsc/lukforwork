@@ -1,5 +1,5 @@
 // this file is for mileston4, related to how to render user profile
-import { errorPopup } from "./error_handle.js";
+import { errorPopup } from "./errorHandle.js";
 import { fetchGET, fetchPut } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
 import { analyzeTime } from "./feed.js";

@@ -85,6 +85,9 @@ body {
 
 #email:focus,
 #password:focus {
+  outline: 2px solid transparent;
+  border-style: solid;
+  border-width: 2px;
   border-color: #0a66c2;
 }
 

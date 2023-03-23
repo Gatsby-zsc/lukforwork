@@ -8,11 +8,20 @@ import {
   updatePostButton,
 } from "./addAndUpdateContent.js";
 
+import { infiniteScroll, liveUpdate, pushNotification } from "./challenge.js";
+
+export let jobsPerUser = {};
+
+// we can't get creator name by "GET Job/feed", we need to send another request to get creator name
 export function processCreatorId(creatorId, creatorName, creatorFollowers) {
   function getAllInfo(data) {
+    // each name-id, id-name pair into localstorage, to reuse later
     localStorage.setItem(data.name, data.id);
     localStorage.setItem(data.id, data.name);
     creatorName.textContent = data.name;
+
+    // update key-value pair into map
+    jobsPerUser[data.id] = data.jobs.length;
 
     data.watcheeUserIds.length == 1
       ? (creatorFollowers.textContent =
@@ -52,6 +61,7 @@ export function analyzeTime(date) {
   }
 }
 
+// add user to like list
 export function processUserLikes(user, likeUsers) {
   const userNode = document
     .getElementById("like-user-template")
@@ -70,7 +80,8 @@ export function processUserLikes(user, likeUsers) {
   likeUsers.appendChild(userNode);
 }
 
-function processEachComment(comment, commentContent) {
+// add each comment into comment section of each post
+export function processEachComment(comment, commentContent) {
   let commentNode = document.getElementById("comment-template").cloneNode(true);
   commentNode.removeAttribute("id");
   commentNode.classList.remove("Hidden");
@@ -84,13 +95,15 @@ function processEachComment(comment, commentContent) {
   commentContent.appendChild(commentNode);
 }
 
-function getNumberUserLikes(likeStr) {
+// get number of user who like this post
+export function getNumberUserLikes(likeStr) {
   const processedStr = likeStr.split(" ");
   let currentNumber = Number(processedStr[1]);
   return currentNumber;
 }
 
-function getMemberLikeList(postInfoid) {
+// get list of users who like this post from local storage
+export function getMemberLikeList(postInfoid) {
   let rawArr = localStorage.getItem(`${postInfoid} Member List`).split(" ");
   let retArr = [];
   for (const item of rawArr) {
@@ -101,7 +114,8 @@ function getMemberLikeList(postInfoid) {
   return retArr;
 }
 
-function removeUserFromLikes(loginUser, likeList, postInfoid) {
+// remove the user from list and store back to local storage
+export function removeUserFromLikes(loginUser, likeList, postInfoid) {
   let retStr = "";
   for (const item of likeList) {
     if (item !== loginUser) {
@@ -113,7 +127,8 @@ function removeUserFromLikes(loginUser, likeList, postInfoid) {
   localStorage.setItem(likeMemberList, retStr);
 }
 
-function addUserintoLikes(loginUser, likeList, postInfoid) {
+// add the user into list and store back to local storage
+export function addUserintoLikes(loginUser, likeList, postInfoid) {
   let retStr = "";
   retStr = retStr + " " + loginUser;
   for (const item of likeList) {
@@ -124,13 +139,14 @@ function addUserintoLikes(loginUser, likeList, postInfoid) {
   localStorage.setItem(likeMemberList, retStr);
 }
 
-function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
+// change user according to like and unlike
+function likeJob(likeButton, postInfo, numberOfLikes, likeUsers) {
   // request like this post to server
   const loginUser = localStorage.getItem("loginUser");
   const likeList = getMemberLikeList(postInfo.id);
 
   // initialize default field for like button
-  if (likeList.includes(loginUser) === false) {
+  if (!likeList.includes(loginUser)) {
     likeButton.textContent = "Like";
   } else {
     likeButton.textContent = "Unlike";
@@ -141,7 +157,7 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
     const userName = localStorage.getItem(loginUser);
     const likeList = getMemberLikeList(postInfo.id);
     const userList = likeUsers.querySelectorAll("div");
-    if (likeList.includes(loginUser) === true) {
+    if (likeList.includes(loginUser)) {
       fetchPut(
         "job/like",
         { id: postInfo.id, turnon: false },
@@ -149,7 +165,8 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
       );
       removeUserFromLikes(loginUser, likeList, postInfo.id);
       likeButton.textContent = "Like";
-      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) - 1;
+      let currentNumberUserLike =
+        getNumberUserLikes(numberOfLikes.textContent) - 1;
 
       for (let item of userList) {
         if (item.childNodes[3].textContent == userName) {
@@ -158,7 +175,7 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
         }
       }
 
-      jobLikes.textContent = "Like: " + currentNumberUserLike;
+      numberOfLikes.textContent = "Likes: " + currentNumberUserLike;
     } else {
       fetchPut(
         "job/like",
@@ -167,16 +184,18 @@ function likeJob(likeButton, postInfo, jobLikes, likeUsers) {
       );
       addUserintoLikes(loginUser, likeList, postInfo.id);
       likeButton.textContent = "Unlike";
-      let currentNumberUserLike = getNumberUserLikes(jobLikes.textContent) + 1;
+      let currentNumberUserLike =
+        getNumberUserLikes(numberOfLikes.textContent) + 1;
 
       processUserLikes(userName, likeUsers);
 
-      jobLikes.textContent = "Like: " + currentNumberUserLike;
+      numberOfLikes.textContent = "Likes: " + currentNumberUserLike;
     }
   });
 }
 
-function renderUserImge(imgNode, userId) {
+// if user didn't upload their image, we set a deault image for them
+export function renderUserImge(imgNode, userId) {
   function successFetchImg(data) {
     if (data.image !== undefined) {
       imgNode.src = data.image;
@@ -192,8 +211,9 @@ function renderUserImge(imgNode, userId) {
   );
 }
 
+// render all information for each post
 function renderEachPost(postInfo) {
-  // render all information for each post
+  // create an new node and delete the id attribute
   let oldPost = document.getElementById("post-template");
   let newPost = oldPost.cloneNode(true);
   newPost.removeAttribute("id");
@@ -234,15 +254,18 @@ function renderEachPost(postInfo) {
   const jobDescription = postContent.childNodes[5];
   jobDescription.textContent = postInfo.description;
 
+  // image of this job
   const jobImage = newPost.childNodes[5];
   jobImage.src = postInfo.image;
 
   const likeAndComment = newPost.childNodes[7];
 
   // like & comment
-  const jobLikes = likeAndComment.childNodes[1].childNodes[1];
-  jobLikes.textContent = "Likes: " + postInfo.likes.length;
+  // number of users who like this post
+  const numberOfLikes = likeAndComment.childNodes[1].childNodes[1];
+  numberOfLikes.textContent = "Likes: " + postInfo.likes.length;
 
+  // list of users who like this post
   const likeUsers = likeAndComment.childNodes[3];
   let userStr = "";
   for (const user of postInfo.likes) {
@@ -254,17 +277,8 @@ function renderEachPost(postInfo) {
   const likeMemberList = postInfo.id + " Member List";
   localStorage.setItem(likeMemberList, userStr);
 
-  jobLikes.addEventListener("click", () => {
-    const getPostUser = localStorage
-      .getItem(postInfo.id.toString() + " Member List")
-      .split(" ");
-
-    if (getPostUser.length === 1) {
-      // don't need to show like list
-      return;
-    }
-
-    // implement a toggle to switch between hide and show
+  // implement a toggle to switch between hide and show
+  numberOfLikes.addEventListener("click", () => {
     if (likeUsers.classList.contains("Hidden")) {
       likeUsers.classList.remove("Hidden");
     } else {
@@ -272,16 +286,18 @@ function renderEachPost(postInfo) {
     }
   });
 
-  const jobComments = likeAndComment.childNodes[1].childNodes[3];
-  jobComments.textContent = "Comments: " + postInfo.comments.length;
+  // number of comments on this post
+  const numberOfComments = likeAndComment.childNodes[1].childNodes[3];
+  numberOfComments.textContent = "Comments: " + postInfo.comments.length;
 
+  // list of comments made by different user
   const commentContent = likeAndComment.childNodes[5];
   for (const comment of postInfo.comments) {
     processEachComment(comment, commentContent);
   }
 
-  jobComments.addEventListener("click", () => {
-    // implement a toggle to switch between hide and show
+  // implement a toggle to switch between hide and show
+  numberOfComments.addEventListener("click", () => {
     if (commentContent.classList.contains("Hidden")) {
       commentContent.classList.remove("Hidden");
     } else {
@@ -289,6 +305,7 @@ function renderEachPost(postInfo) {
     }
   });
 
+  // likes and comment button
   const functionSection = likeAndComment.childNodes[7];
   const likeButton = functionSection.childNodes[1];
   const commentBtn = functionSection.childNodes[3];
@@ -300,23 +317,39 @@ function renderEachPost(postInfo) {
     makeComment(postInfo.id, commentDiv);
   });
 
-  // makeComment(commentBtn);
-  likeJob(likeButton, postInfo, jobLikes, likeUsers);
+  // At local page (i.e ignoring polling the request from server to check the latest infomation)
+  // we directly modify the number of users who like this post each time we press the like button
+  // and it will immediately send PUT request to server
+  likeJob(likeButton, postInfo, numberOfLikes, likeUsers);
 
+  // live update "likes" and "comments" by polling server
+  liveUpdate(
+    likeButton,
+    postInfo,
+    numberOfLikes,
+    likeUsers,
+    numberOfComments,
+    commentContent
+  );
+
+  // process every name in this post so that we can view their profile when we click their name
   addEventForEachName(newPost);
+
   document.getElementById("post").insertBefore(newPost, oldPost);
   // insert the newly created node ahead of template node each time
 }
 
+// render each post after we fetch 5 posts from server
+export function renderPost(data) {
+  for (let item of data) {
+    renderEachPost(item);
+  }
+}
+
+// render all elements in homepage
 export function renderHomePage() {
   document.getElementById("login").classList.add("Hidden");
   document.getElementById("homepage").classList.remove("Hidden");
-  const renderPost = (data) => {
-    // render each post after we fetch 5 posts from server
-    for (let item of data) {
-      renderEachPost(item);
-    }
-  };
 
   // config search bar
   homeButton();
@@ -331,15 +364,17 @@ export function renderHomePage() {
   // config side bar
   addEventForMyname();
 
+  // infinite scroll of milestone 6
+  window.addEventListener("scroll", infiniteScroll);
+  pushNotification();
+
   // update page to retrieve next 5 Posts next time
   let currentPage = localStorage.getItem("Page");
   localStorage.setItem("Page", Number(currentPage) + 5);
 
-  // infinite scroll of milestone 6
-
   fetchGET(
     `job/feed?start=${currentPage}`,
     renderPost,
-    "error happen when render"
+    "error happen when render posts"
   );
 }
