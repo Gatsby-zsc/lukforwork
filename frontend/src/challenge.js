@@ -127,6 +127,9 @@ function processComments(numberOfComments, commentContent, data, postId) {
         processEachComment(comment, commentContent);
       }
 
+      // add eventlisetener for each name to render profile when we click name
+      addEventForEachName(commentContent);
+
       // update number of comments
       numberOfComments.textContent = "Comments: " + listOfComments.length;
       break;
