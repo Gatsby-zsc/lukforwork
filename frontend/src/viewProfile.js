@@ -41,15 +41,6 @@ function getWatchingUser(userId, watchedList, newProfile) {
   );
 }
 
-// clear watching list to re-render next time
-function clearWatchList(newProfile) {
-  const childList = newProfile.childNodes[3].querySelectorAll("div");
-
-  for (let item of childList) {
-    item.remove();
-  }
-}
-
 // set up all user info
 function processUserInfo(data, newProfile) {
   const userInfo = newProfile.childNodes[1];
@@ -63,24 +54,21 @@ function processUserInfo(data, newProfile) {
 
   // process user info
   const userName = userInfo.childNodes[3];
-  userName.textContent = data.name;
+  userName.textContent = "Name: " + data.name;
 
   const userId = userInfo.childNodes[5];
-  userId.textContent = data.id;
+  userId.textContent = "Id: " + data.id;
 
   const userEmail = userInfo.childNodes[7];
-  userEmail.textContent = data.email;
+  userEmail.textContent = "Email: " + data.email;
 
   const userWatchBy = userInfo.childNodes[9];
-  userWatchBy.textContent =
-    "watched by " +
-    data.watcheeUserIds.length +
-    (data.watcheeUserIds.length <= 1 ? " user" : " users");
+  userWatchBy.textContent = "Followers: " + data.watcheeUserIds.length;
 }
 
 // process all watch user
 function processWatchList(data, newProfile) {
-  const watchedList = newProfile.childNodes[3];
+  const watchedList = newProfile.childNodes[1].childNodes[13];
   let watcheeListIds = data.watcheeUserIds;
   // update user info for each watching user
   for (const user of watcheeListIds) {
@@ -90,13 +78,13 @@ function processWatchList(data, newProfile) {
 
 // process watch button
 function processWatchButton(data, newProfile) {
-  const watchButton = newProfile.childNodes[5];
+  const watchButton = newProfile.childNodes[1].childNodes[11];
   let watcheeListIds = data.watcheeUserIds;
-  const watchedList = newProfile.childNodes[3];
+  const watchedList = newProfile.childNodes[1].childNodes[13];
   const myId = Number(localStorage.getItem("loginUser"));
 
   // set the default field of button to watch
-  watchButton.textContent = "watch";
+  watchButton.textContent = "+ Follow";
 
   // check whether the current profile we view is our own profile
   if (data.id === myId) {
@@ -110,46 +98,31 @@ function processWatchButton(data, newProfile) {
   for (const id of watcheeListIds) {
     // initialise button field
     if (myId === id) {
-      watchButton.textContent = "unwatch";
+      watchButton.textContent = "✔ Following";
     }
   }
 
   watchButton.addEventListener("click", () => {
-    if (watchButton.textContent == "unwatch") {
-      // we have watched this user
-      watchButton.textContent = "watch";
-
-      // delete our userId in watch list array
-      clearWatchList(newProfile);
-      const index = watcheeListIds.indexOf(myId);
-      watcheeListIds.splice(index, 1);
-
-      for (const user of watcheeListIds) {
-        getWatchingUser(user, watchedList);
-      }
-
+    if (watchButton.textContent == "✔ Following") {
       // send put request to server
       fetchPut(
         "user/watch",
         { email: data.email, turnon: false },
-        "error happens when sending unwatch request to server"
+        "error happens when sending Following request to server"
       );
+
+      newProfile.remove();
+      renderProfile(data.name);
     } else {
-      watchButton.textContent = "unwatch";
-      watcheeListIds.push(myId);
-
-      // re-render watch
-      clearWatchList(newProfile);
-      for (const user of watcheeListIds) {
-        getWatchingUser(user, watchedList);
-      }
-
       // send put request to server
       fetchPut(
         "user/watch",
         { email: data.email, turnon: true },
         "error happens when sending watch request to server"
       );
+
+      newProfile.remove();
+      renderProfile(data.name);
     }
   });
 }
@@ -159,6 +132,7 @@ function processJob(data, newProfile) {
   const jobs = data.jobs;
   for (let job of jobs) {
     const newJob = document.createElement("div");
+    newJob.classList.add("each-post");
 
     const newJobNode = document
       .getElementById("profile-post-template")
@@ -172,13 +146,15 @@ function processJob(data, newProfile) {
     const postModi = newJobNode.childNodes[7].cloneNode(true);
 
     // Job-post-date
-    PostContent.childNodes[1].textContent = analyzeTime(job.createdAt);
+    PostContent.childNodes[1].textContent =
+      "Post at: " + analyzeTime(job.createdAt);
 
     // Job-title
     PostContent.childNodes[3].textContent = job.title;
 
     // Start-date
-    PostContent.childNodes[5].textContent = analyzeTime(job.start);
+    PostContent.childNodes[5].textContent =
+      "Start at: " + analyzeTime(job.start);
 
     // Job-description
     PostContent.childNodes[7].textContent = job.description;
@@ -201,7 +177,7 @@ function processJob(data, newProfile) {
     }
 
     // append new job to container
-    newProfile.childNodes[7].append(newJob);
+    newProfile.childNodes[3].append(newJob);
   }
 }
 

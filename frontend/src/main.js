@@ -1,4 +1,5 @@
 import { login, registration, swap } from "./loginRegis.js";
+import { errorPopup } from "./errorHandle.js";
 
 const signInButton = document.getElementById("sign-in-button");
 

@@ -133,7 +133,7 @@
 
           <button id="home-button">Home</button>
           <button>My Network</button>
-          <button id="watch-user">Watch/Unwatch user</button>
+          <button id="watch-user">Follow users</button>
           <button id="update-profile-button">Update my profile</button>
         </div>
       </header>
@@ -218,16 +218,16 @@
       </main>
     </div>
 
-    <div id="profile-post-template" class="Hidden">
+    <div id="profile-post-template" class="profile-post Hidden">
       <div class="Post-content">
-        <div class="profile-Post-date"></div>
-        <span class="profile-Job-title"></span>
-        <div class="profile-Start-date"></div>
-        <div class="profile-Job-description"></div>
+        <p class="profile-post-date"></p>
+        <p class="profile-job-title"></p>
+        <p class="profile-start-date"></p>
+        <p class="profile-job-description"></p>
       </div>
       <img class="profile-Job-image" alt="Job-image" />
-      <div class="delete">...</div>
-      <div class="modify">MM</div>
+      <div class="delete">Delete this post</div>
+      <div class="modify">Modify this post</div>
     </div>
 
     <div id="like-user-template" class="Each-user-watching Hidden">
@@ -248,19 +248,16 @@
     <div id="profile-page" class="Hidden">
       <div id="profile-user-info">
         <img id="profile-user-img" alt="user image" />
-        <div id="profile-user-name"></div>
-        <div id="profile-user-id"></div>
-        <div id="profile-user-email"></div>
-        <div id="profile-user-watched-by"></div>
-      </div>
-      <div id="profile-watched-by-list-div">
+        <p id="profile-user-name"></p>
+        <p id="profile-user-id"></p>
+        <p id="profile-user-email"></p>
+        <p id="profile-user-watched-by"></p>
+        <p id="watch-and-unwatch-user"></p>
         <div id="profile-watched-by-list"></div>
       </div>
-      <button id="watch-and-unwatch-user"></button>
       <div id="profile-jobs-info"></div>
       <!--When click the top left side Work logo, hiiden the profile-page  -->
     </div>
-
     <!-- When click on the top menu bar "me" button show this block as a toggle -->
     <div id="update-profile" class="Hidden">
       <label for="new-eamil">Your new email</label>
@@ -297,7 +294,7 @@
 
     <div id="error-box" class="Hidden">
       <p id="error-message"></p>
-      <button id="close-error-window">close this window</button>
+      <div id="close-error-window">close</div>
     </div>
     <script type="module" src="src/main.js"></script>
   </body>
