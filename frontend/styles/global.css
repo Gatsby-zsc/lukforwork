@@ -214,15 +214,24 @@ body {
   width: 100vw;
   height: 100%;
 }
-#homepage-Logo {
+
+.homepage-logo {
+  margin: 10px 10px;
+  color: #0a66c2;
+  font-weight: bolder;
+  font-size: 30px;
+}
+
+#homepage-logo-icon {
   font-size: 30px;
   font-weight: bold;
   background-color: #0a66c2;
   color: #ffffff;
   border-radius: 3px;
-  padding: 1px 10px;
-  margin-right: 5px;
+  padding: 0px 4px;
+  margin-left: 6px;
 }
+
 #menu-bar {
   width: 100vw;
   height: 52px;
@@ -235,7 +244,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  width: 90%;
+  width: 80%;
   min-height: 100%;
   margin: 0 auto;
 }
@@ -279,7 +288,7 @@ body {
 }
 
 #homepage-content {
-  margin: 76px auto 0;
+  margin: 70px auto 0;
   width: 1128px;
 }
 
@@ -296,9 +305,10 @@ body {
   margin: 8px 16px 0;
 }
 
-.Post-head-pic {
+#post-head-pic {
   width: 48px;
   height: 48px;
+  border-radius: 50%;
 }
 
 #text-post {
@@ -740,7 +750,7 @@ body {
   font-size: 10pt;
 }
 
-#student {
+#personal-description {
   margin-top: 10px;
 }
 
@@ -754,6 +764,91 @@ body {
   border-bottom: none;
 }
 /* side bar */
+
+/* Post template */
+/* update profile template */
+.Post-popup-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1;
+}
+
+.New-post-detail {
+  width: 400px;
+  background-color: #ffffff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 10px 16px;
+}
+
+.Post-detail-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 600;
+  align-items: center;
+  color: #0a66c2;
+}
+
+#close-post-window {
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  align-items: center;
+  transition: 0.2s;
+}
+
+#close-post-window:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+#post-content {
+  resize: none;
+  border-radius: 3px;
+}
+
+.Btn-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Post-btn {
+  font-size: 16px;
+  color: #fff;
+  background-color: #0a66c2;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: none;
+}
+
+.Post-btn:hover {
+  cursor: pointer;
+  background-color: #094d92;
+}
+
+#make-comment {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+}
 
 @media (max-width: 1200px) {
   #homepage-content {

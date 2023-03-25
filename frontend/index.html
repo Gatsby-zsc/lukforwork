@@ -122,7 +122,10 @@
     <div id="homepage" class="Hidden">
       <header id="menu-bar">
         <div id="menu-items">
-          <div id="homepage-Logo">Work</div>
+          <div class="homepage-logo">
+            LurkFor<span id="homepage-logo-icon">Work</span>
+          </div>
+
           <div id="search-div" class="Hidden">
             <input
               id="search-bar"
@@ -144,7 +147,7 @@
             <div class="my-info">
               <img id="my-img" />
               <p id="my-name" class="User-name"></p>
-              <p id="student">Student at UNSW</p>
+              <p id="personal-description">Student at UNSW</p>
             </div>
             <div id="my-profile" class="side-bar-items">My profile</div>
             <div class="side-bar-items" id="update-profile-button">
@@ -164,8 +167,12 @@
         <div id="posts-div">
           <div id="new-post" class="Homepage-Item">
             <div id="text-post-div">
-              <div class="Post-head-pic">P-img</div>
-              <button id="text-post">Start a post</button>
+              <img id="post-head-pic" />
+              <input
+                type="text"
+                id="text-post"
+                placeholder="Make Your Post Here"
+              />
             </div>
             <div class="Post-select">
               <button>Photo</button>
@@ -281,17 +288,33 @@
     </div>
 
     <div id="make-post-struc" class="Hidden">
-      <label for="post-header">Post Header</label>
-      <input type="text" id="post-header" /><br />
-      <label for="post-content">Post content</label>
-      <input type="text" id="post-content" /><br />
-      <label for="post-start">Start Time</label>
-      <input type="datetime-local" id="post-start" /><br />
-      <label for="post-img">Your image</label><br />
-      <input type="file" id="post-img" /><br />
-      <button id="upload-post" class="Hidden">Make a Post</button>
-      <button id="modify-post" class="Hidden">Modify the Post</button><br />
-      <button id="close-post-window">close window</button>
+      <div class="Post-popup-div"></div>
+      <div class="New-post-detail">
+        <div class="Post-detail-header">
+          <div>Make Your Post</div>
+          <div id="close-post-window">
+            <svg width="24" height="24">
+              <path
+                d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <label for="post-header">Post Header</label>
+        <input type="text" id="post-header" /><br />
+        <label for="post-content">Post content</label>
+        <textarea type="text" id="post-content" rows="10" cols="50"></textarea
+        ><br />
+        <label for="post-start">Start Time</label>
+        <input type="datetime-local" id="post-start" /><br />
+        <div class="Btn-div">
+          <!-- <label for="post-img">Your image</label><br /> -->
+          <input type="file" id="post-img" />
+
+          <button id="upload-post" class="Hidden Post-btn">Post</button>
+          <button id="modify-post" class="Hidden Post-btn">Modify</button>
+        </div>
+      </div>
     </div>
 
     <div id="make-comment" class="Hidden">

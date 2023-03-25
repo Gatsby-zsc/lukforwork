@@ -365,6 +365,12 @@ export function renderHomePage() {
 
   // config make post&comment button
   makePost();
+  // make new post div
+  const myImg = document.getElementById("post-head-pic");
+  const userId = localStorage.getItem("loginUser");
+  renderUserImge(myImg, userId);
+  console.log(userId);
+
   closePostWindow();
   updatePostButton();
 
