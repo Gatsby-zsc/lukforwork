@@ -26,6 +26,7 @@
       "name": "wrd",
       "password": "wrd",
       "watcheeUserIds": {
+        "12398": true,
         "62746": true
       }
     },

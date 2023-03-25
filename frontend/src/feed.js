@@ -1,6 +1,13 @@
 import { fetchGET, fetchPut } from "./fetch.js";
 import { addEventForEachName, addEventForMyname } from "./viewProfile.js";
-import { homeButton, updateProfileButton, searchBar } from "./topBar.js";
+
+import {
+  homeButton,
+  updateProfileButton,
+  searchBar,
+  sideBar,
+} from "./topAndSideBar.js";
+
 import {
   makePost,
   makeComment,
@@ -363,6 +370,7 @@ export function renderHomePage() {
 
   // config side bar
   addEventForMyname();
+  sideBar();
 
   // infinite scroll of milestone 6
   window.addEventListener("scroll", infiniteScroll);
