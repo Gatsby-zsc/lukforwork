@@ -22,21 +22,15 @@ export function closePostWindow() {
 }
 
 // comment the job we are viewing
-export function makeComment(
-  postId,
-  commentDiv,
-  newCommentContent,
-  commentPostBtn
-) {
-  commentPostBtn.addEventListener("click", () => {
-    console.log(12);
-    fetchPost("job/comment", {
-      id: postId,
-      comment: newCommentContent,
-    });
-    commentDiv.classList.add("Hidden");
-    newCommentContent = "";
+export function makeComment(postId, newComment, commentDiv) {
+  fetchPost("job/comment", {
+    id: postId,
+    comment: newComment.value,
   });
+
+  // hide make comment section and refresh content
+  newComment.value = "";
+  commentDiv.classList.add("Hidden");
 }
 
 // Del a post in personal profile

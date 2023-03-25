@@ -344,10 +344,10 @@ function renderEachPost(postInfo) {
     } else {
       commentDiv.classList.add("Hidden");
     }
+  });
 
-    const newCommentContent = newComment.value;
-    console.log(newCommentContent);
-    makeComment(postInfo.id, commentDiv, newCommentContent, commentPostBtn);
+  commentPostBtn.addEventListener("click", () => {
+    makeComment(postInfo.id, newComment, commentDiv);
   });
 
   // At local page (i.e ignoring polling the request from server to check the latest infomation)
@@ -392,6 +392,7 @@ export function renderHomePage() {
 
   // config make post&comment button
   makePost();
+
   // make new post div
   const myImg = document.getElementById("post-head-pic");
   const userId = localStorage.getItem("loginUser");
