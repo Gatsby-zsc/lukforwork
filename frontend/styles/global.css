@@ -329,22 +329,29 @@ a:active {
   margin-bottom: 8px;
 }
 
-.Text-post-div {
+#text-post-div {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 8px 16px 0;
+  margin: 8px 16px 5px 16px;
 }
 
 #post-head-pic {
   width: 48px;
   height: 48px;
   border-radius: 50%;
+  margin-right: 10px;
 }
 
 #text-post {
   margin: 4px 0;
+  padding: 0 5px;
+  width: 60%;
+  height: 48px;
+  border-radius: 30px;
+  font-size: 20px;
 }
+
 .Post-select {
   display: flex;
   flex-direction: row;
@@ -606,12 +613,77 @@ a:active {
 }
 
 /* Profile realative */
-#update-profile {
-  position: fixed;
-  top: 40vh;
-  left: 38vw;
-  border: thick double #32a1ce;
+.New-profile-content {
+  width: 250px;
   background-color: #ffffff;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 15px;
+}
+
+#close-upload-window {
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  align-items: center;
+  transition: 0.2s;
+}
+
+#current-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.Img-change {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.Update-profile-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.New-profile-content label {
+  font-size: 16px;
+}
+
+.Profile-input {
+  width: 80%;
+  border-radius: 3px;
+}
+
+.Profile-input:active {
+  border-color: #0a66c2;
+}
+
+.Hide-password:hover {
+  cursor: pointer;
+}
+
+.New-personal-img:hover {
+  cursor: pointer;
+}
+
+.Change-details {
+  margin: 5px 8px 5px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 #upload-info {
@@ -789,7 +861,7 @@ a:active {
 
 /* Post template */
 /* update profile template */
-.Post-popup-div {
+.Popup-back-div {
   position: fixed;
   top: 0;
   left: 0;
@@ -813,6 +885,16 @@ a:active {
   padding: 10px 16px;
 }
 
+.New-post-detail .Post-input {
+  margin: 10px 0;
+  border-radius: 3px;
+  border: 1px solid;
+}
+
+.New-post-detail .Post-input:active {
+  border-color: #0a66c2;
+}
+
 .Post-detail-header {
   display: flex;
   flex-direction: row;
@@ -821,6 +903,7 @@ a:active {
   font-weight: 600;
   align-items: center;
   color: #0a66c2;
+  margin-bottom: 10px;
 }
 
 #close-post-window {
@@ -833,14 +916,29 @@ a:active {
   transition: 0.2s;
 }
 
-#close-post-window:hover {
+#close-post-window:hover,
+#close-upload-window:hover {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.15);
+}
+
+#post-header {
+  font-size: 20px;
 }
 
 #post-content {
   resize: none;
   border-radius: 3px;
+  border: 1px solid;
+  font-size: 18px;
+}
+
+#post-content:active {
+  border-color: #0a66c2;
+}
+
+.Post-pic-btn:hover .Post-btn:hover {
+  cursor: pointer;
 }
 
 .Btn-div {
@@ -848,6 +946,7 @@ a:active {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10px;
 }
 
 .Post-btn {
