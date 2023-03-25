@@ -144,7 +144,8 @@ export function liveUpdate(
   numberOfLikes,
   likeUsers,
   numberOfComments,
-  commentContent
+  commentContent,
+  followers
 ) {
   setInterval(() => {
     const userId = postInfo.creatorId;
@@ -154,6 +155,11 @@ export function liveUpdate(
     function success(data) {
       processLikes(likeButton, numberOfLikes, likeUsers, data, postId);
       processComments(numberOfComments, commentContent, data, postId);
+
+      // live update number of followers
+      data.watcheeUserIds.length == 1
+        ? (followers.textContent = data.watcheeUserIds.length + " follower")
+        : (followers.textContent = data.watcheeUserIds.length + " followers");
     }
 
     fetchGET(

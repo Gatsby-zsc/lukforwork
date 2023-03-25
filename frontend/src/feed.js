@@ -305,6 +305,13 @@ function renderEachPost(postInfo) {
 
   // implement a toggle to switch between hide and show
   numberOfComments.addEventListener("click", () => {
+    const nbOfComments = Number(numberOfComments.textContent.split(" ")[1]);
+
+    // if no one comment this post, we won't show comments
+    if (nbOfComments === 0) {
+      return;
+    }
+
     if (commentContent.classList.contains("Hidden")) {
       commentContent.classList.remove("Hidden");
     } else {
@@ -348,7 +355,8 @@ function renderEachPost(postInfo) {
     numberOfLikes,
     likeUsers,
     numberOfComments,
-    commentContent
+    commentContent,
+    followers
   );
 
   // process every name in this post so that we can view their profile when we click their name

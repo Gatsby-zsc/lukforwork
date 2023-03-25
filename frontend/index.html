@@ -142,6 +142,8 @@
       </header>
 
       <main id="homepage-content">
+        <a href="#" id="back-to-top">BACK TO TOP</a>
+
         <div id="user-window">
           <div id="user-layout" class="Homepage-Item">
             <div class="my-info">
@@ -171,7 +173,7 @@
               <input
                 type="text"
                 id="text-post"
-                placeholder="Make Your Post Here"
+                placeholder="Click to make new post"
               />
             </div>
             <div class="Post-select">
@@ -227,11 +229,9 @@
               </div>
               <div class="Comment-div Hidden">
                 <img class="Comment-img" />
-                <textarea
-                  rows="1"
-                  cols="50"
-                  class="New-comment-content"
-                ></textarea>
+                <textarea rows="1" cols="50" class="New-comment-content">
+aaa</textarea
+                >
                 <div class="Post-btn">Post</div>
               </div>
             </div>
@@ -280,24 +280,53 @@
         <div id="profile-watched-by-list"></div>
       </div>
       <div id="profile-jobs-info"></div>
-      <!--When click the top left side Work logo, hiiden the profile-page  -->
     </div>
-    <!-- When click on the top menu bar "me" button show this block as a toggle -->
+    <!-- Update personal profile -->
     <div id="update-profile" class="Hidden">
-      <label for="new-eamil">Your new email</label>
-      <input type="text" id="new-eamil" /><br />
-      <label for="new-name">Your new name</label>
-      <input type="text" id="new-name" /><br />
-      <label for="new-password">Your new password</label>
-      <input type="text" id="new-password" /><br />
-      <label for="new-img">Your new image</label><br />
-      <input type="file" id="new-img" /><br />
-      <button id="upload-info">update profile</button>
-      <button id="close-upload-window">close window</button>
+      <div class="Popup-back-div"></div>
+      <div class="New-profile-content">
+        <div class="Update-profile-header">
+          <div class="Post-detail-header">Update Your Profile</div>
+          <div id="close-upload-window">
+            <svg width="24" height="24">
+              <path
+                d="M13.42 12L20 18.58 18.58 20 12 13.42 5.42 20 4 18.58 10.58 12 4 5.42 5.42 4 12 10.58 18.58 4 20 5.42z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div class="Img-change">
+          <img id="current-img" />
+          <div class="Add-img">
+            <label for="new-img">
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path
+                  class="New-personal-img"
+                  fill="gray"
+                  d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"
+                ></path>
+              </svg>
+            </label>
+            <input type="file" id="new-img" class="Hidden" />
+          </div>
+        </div>
+        <div class="Change-details">
+          <label for="new-eamil">Your new email</label>
+          <input class="Profile-input" type="text" id="new-eamil" />
+          <label for="new-name">Your new name</label>
+          <input class="Profile-input" type="text" id="new-name" />
+          <label for="new-password">Your new password</label>
+          <div>
+            <input class="Profile-input" type="text" id="new-password" />
+            <button class="Hide-password">Hide</button>
+          </div>
+        </div>
+        <button id="upload-info" class="Post-btn">Update</button>
+      </div>
     </div>
 
     <div id="make-post-struc" class="Hidden">
-      <div class="Post-popup-div"></div>
+      <div class="Popup-back-div"></div>
       <div class="New-post-detail">
         <div class="Post-detail-header">
           <div>Make Your Post</div>
@@ -310,15 +339,22 @@
           </div>
         </div>
         <label for="post-header">Post Header</label>
-        <input type="text" id="post-header" /><br />
+        <input class="Post-input" type="text" id="post-header" />
         <label for="post-content">Post content</label>
-        <textarea type="text" id="post-content" rows="10" cols="50"></textarea
-        ><br />
+        <textarea
+          type="text"
+          class="Post-input"
+          id="post-content"
+          rows="10"
+          cols="50"
+        ></textarea>
         <label for="post-start">Start Time</label>
-        <input type="datetime-local" id="post-start" /><br />
+        <input type="datetime-local" class="Post-input" id="post-start" />
         <div class="Btn-div">
-          <!-- <label for="post-img">Your image</label><br /> -->
-          <input type="file" id="post-img" />
+          <label for="post-img" class="Post-pic-btn Post-btn"
+            >Upload Post Picture</label
+          >
+          <input type="file" id="post-img" class="Hidden" />
 
           <button id="upload-post" class="Hidden Post-btn">Post</button>
           <button id="modify-post" class="Hidden Post-btn">Modify</button>

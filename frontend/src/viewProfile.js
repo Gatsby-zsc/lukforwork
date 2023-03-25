@@ -2,7 +2,7 @@
 import { errorPopup } from "./errorHandle.js";
 import { fetchGET, fetchPut } from "./fetch.js";
 import { fileToDataUrl } from "./helpers.js";
-import { analyzeTime } from "./feed.js";
+import { analyzeTime, renderUserImge } from "./feed.js";
 import { delPost, modiPost } from "./addAndUpdateContent.js";
 
 // copy and process the template
@@ -255,6 +255,9 @@ export function updateProfile() {
     document.getElementById("new-eamil").value = "";
     document.getElementById("new-password").value = "";
     document.getElementById("new-name").value = "";
+    const myImg = document.getElementById("current-img");
+    const userId = localStorage.getItem("loginUser");
+    renderUserImge(myImg, userId);
   });
 
   closeProfileButton.addEventListener("click", () => {
@@ -268,8 +271,7 @@ export function updateProfile() {
     const newEmail = document.getElementById("new-eamil").value;
     const newPassword = document.getElementById("new-password").value;
     const newName = document.getElementById("new-name").value;
-    const newImg = document.querySelector('input[id="update-profile-button"]')
-      .files[0];
+    const newImg = document.querySelector('input[id="new-img"]').files[0];
 
     fileToDataUrl(newImg)
       .then((data) => {
@@ -285,12 +287,13 @@ export function updateProfile() {
         );
       })
       .then(() => {
+        document.getElementById("update-profile").classList.add("Hidden");
         errorPopup("New info upload successfully!!!");
         // refresh all info after successfully upload
         document.getElementById("new-eamil").value = "";
         document.getElementById("new-password").value = "";
         document.getElementById("new-name").value = "";
-        document.querySelector('input[id="update-profile-button"]').value = "";
+        document.querySelector('input[id="new-img"]').value = "";
       });
   });
 }

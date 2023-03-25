@@ -70,6 +70,7 @@ function clearPostWindow(postButton) {
 export function makePost() {
   const makePostBtn = document.getElementById("text-post");
   const putUp = document.getElementById("upload-post");
+
   makePostBtn.addEventListener("click", () => {
     clearPostWindow(putUp);
   });
