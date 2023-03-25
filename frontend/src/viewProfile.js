@@ -245,6 +245,7 @@ export function updateProfile() {
   const updateProfileButton = document.getElementById("update-profile-button");
   const closeProfileButton = document.getElementById("close-upload-window");
   const uploadProfileButton = document.getElementById("upload-info");
+  const hidePasswordButton = document.getElementById("hide-password");
 
   updateProfileButton.addEventListener("click", () => {
     // pop up update profile window
@@ -295,6 +296,17 @@ export function updateProfile() {
         document.getElementById("new-name").value = "";
         document.querySelector('input[id="new-img"]').value = "";
       });
+  });
+
+  hidePasswordButton.addEventListener("click", () => {
+    const passwordField = document.getElementById("new-password");
+    if (passwordField.type == "text") {
+      hidePasswordButton.textContent = "Show";
+      passwordField.type = "password";
+    } else {
+      hidePasswordButton.textContent = "Hide";
+      passwordField.type = "text";
+    }
   });
 }
 
