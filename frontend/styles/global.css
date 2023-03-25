@@ -717,6 +717,7 @@ a:active {
 
 #profile-user-img {
   width: 100px;
+  height: 100px;
   display: block;
   margin: 20px auto;
   border-radius: 50%;
