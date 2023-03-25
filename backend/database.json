@@ -5,7 +5,9 @@
       "name": "Betty",
       "password": "cardigan",
       "watcheeUserIds": {
-        "21031": true
+        "21031": true,
+        "29646": true,
+        "62746": true
       }
     },
     "21031": {
@@ -14,8 +16,24 @@
       "password": "betty",
       "watcheeUserIds": {
         "12398": true,
+        "29646": true,
+        "62746": true,
         "80412": true
       }
+    },
+    "29646": {
+      "email": "wuruidong@qq.com",
+      "name": "wrd",
+      "password": "wrd",
+      "watcheeUserIds": {
+        "62746": true
+      }
+    },
+    "62746": {
+      "email": "aaa@qq.com",
+      "name": "aaa",
+      "password": "aaa",
+      "watcheeUserIds": {}
     },
     "80412": {
       "email": "augustine@email.com",

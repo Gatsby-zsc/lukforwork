@@ -8,8 +8,9 @@ const userPassword = localStorage.getItem("rememberUserPassword");
 
 // set up default email and password if we already click remember me last time we login
 if (userEmail !== null || userPassword !== null) {
-  document.getElementById("email").value = userEmail;
-  document.getElementById("password").value = userPassword;
+    document.getElementById("email").value = userEmail;
+    document.getElementById("password").value = userPassword;
+    document.getElementById("remember-me").checked = true;
 }
 
 // initialize local storage
@@ -17,33 +18,33 @@ localStorage.clear();
 localStorage.setItem("Page", 0);
 
 signInButton.addEventListener("click", () => {
-  const rememberMeBtn = document.getElementById("remember-me");
+    const rememberMeBtn = document.getElementById("remember-me");
 
-  if (rememberMeBtn.checked) {
-    // if checkbox is clicked, set the user email and password to localstroage
-    localStorage.setItem(
-      "rememberUserEmail",
-      document.getElementById("email").value
-    );
-    localStorage.setItem(
-      "rememberUserPassword",
-      document.getElementById("password").value
-    );
-  }
+    if (rememberMeBtn.checked) {
+        // if checkbox is clicked, set the user email and password to localstroage
+        localStorage.setItem(
+            "rememberUserEmail",
+            document.getElementById("email").value
+        );
+        localStorage.setItem(
+            "rememberUserPassword",
+            document.getElementById("password").value
+        );
+    }
 
-  login();
+    login();
 });
 
 const registerButton = document.getElementById("register-button");
 registerButton.addEventListener("click", () => {
-  registration();
+    registration();
 });
 
 // sign in switch register
 document.getElementById("switch-join-btn").addEventListener("click", () => {
-  swap("login-interface", "registration-interface");
+    swap("login-interface", "registration-interface");
 });
 
 document.getElementById("switch-sign-btn").addEventListener("click", () => {
-  swap("registration-interface", "login-interface");
+    swap("registration-interface", "login-interface");
 });
