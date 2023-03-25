@@ -108,8 +108,9 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 24px;
-  height: 22px;
+  align-items: center;
+  margin-top: 10px;
+  height: 40px;
 }
 
 #remember-me {
@@ -163,7 +164,7 @@ body {
 
 .Forgot-btn {
   height: 20px;
-  padding: 1px 5px;
+  padding: 5px 10px;
 }
 
 .Forgot-btn:hover {
