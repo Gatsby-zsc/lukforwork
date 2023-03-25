@@ -316,12 +316,24 @@ function renderEachPost(postInfo) {
   const functionSection = likeAndComment.childNodes[7];
   const likeButton = functionSection.childNodes[1];
   const commentBtn = functionSection.childNodes[3];
+  const commentDiv = newPost.childNodes[9];
+  const newComment = commentDiv.childNodes[3];
+  const commentPostBtn = commentDiv.childNodes[5];
+  const commentImg = commentDiv.childNodes[1];
+
+  const userId = localStorage.getItem("loginUser");
+  renderUserImge(commentImg, userId);
 
   commentBtn.addEventListener("click", () => {
-    const commentDiv = document.getElementById("make-comment");
-    commentDiv.classList.remove("Hidden");
-    document.getElementById("new-comment").value = "";
-    makeComment(postInfo.id, commentDiv);
+    if (commentDiv.classList.contains("Hidden")) {
+      commentDiv.classList.remove("Hidden");
+    } else {
+      commentDiv.classList.add("Hidden");
+    }
+
+    const newCommentContent = newComment.value;
+    console.log(newCommentContent);
+    makeComment(postInfo.id, commentDiv, newCommentContent, commentPostBtn);
   });
 
   // At local page (i.e ignoring polling the request from server to check the latest infomation)
@@ -369,7 +381,6 @@ export function renderHomePage() {
   const myImg = document.getElementById("post-head-pic");
   const userId = localStorage.getItem("loginUser");
   renderUserImge(myImg, userId);
-  console.log(userId);
 
   closePostWindow();
   updatePostButton();

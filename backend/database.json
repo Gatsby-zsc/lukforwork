@@ -103,7 +103,12 @@
       "description": "TTK!!!!!!",
       "createdAt": "2023-03-23T08:47:00.805Z",
       "likes": {},
-      "comments": []
+      "comments": [
+        {
+          "userId": "12398",
+          "comment": ""
+        }
+      ]
     },
     "325825": {
       "id": "325825",
@@ -139,8 +144,19 @@
       "start": "2023-03-03T00:20",
       "description": "Content links will become available each week.\n\nPlease note that lecture slides are subject to change, and as such the PDF may not always be immediately up to date (as we have to manually export PDFs). It's recommended to download the PDF immediately before the lecture.\n\nThe PDF of slides will not change after a lecture without an announcement.Content links will become available each week.\n\nPlease note that lecture slides are subject to change, and as such the PDF may not always be immediately up to date (as we have to manually export PDFs). It's recommended to download the PDF immediately before the lecture.\n\nThe PDF of slides will not change after a lecture without an announcement.Content links will become available each week.\n\nPlease note that lecture slides are subject to change, and as such the PDF may not always be immediately up to date (as we have to manually export PDFs). It's recommended to download the PDF immediately before the lecture.\n\nThe PDF of slides will not change after a lecture without an announcement.Content links will become available each week.\n\nPlease note that lecture slides are subject to change, and as such the PDF may not always be immediately up to date (as we have to manually export PDFs). It's recommended to download the PDF immediately before the lecture.\n\nThe PDF of slides will not change after a lecture without an announcement.",
       "createdAt": "2023-03-25T11:20:40.368Z",
-      "likes": {},
-      "comments": []
+      "likes": {
+        "12398": true
+      },
+      "comments": [
+        {
+          "userId": "12398",
+          "comment": ""
+        },
+        {
+          "userId": "12398",
+          "comment": ""
+        }
+      ]
     },
     "498470": {
       "id": "498470",

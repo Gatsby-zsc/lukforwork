@@ -22,15 +22,20 @@ export function closePostWindow() {
 }
 
 // comment the job we are viewing
-export function makeComment(postId, commentDiv) {
-  const postBtn = document.getElementById("post-new-comment");
-  postBtn.addEventListener("click", () => {
-    const newComment = document.getElementById("new-comment").value;
+export function makeComment(
+  postId,
+  commentDiv,
+  newCommentContent,
+  commentPostBtn
+) {
+  commentPostBtn.addEventListener("click", () => {
+    console.log(12);
     fetchPost("job/comment", {
       id: postId,
-      comment: newComment,
+      comment: newCommentContent,
     });
     commentDiv.classList.add("Hidden");
+    newCommentContent = "";
   });
 }
 
