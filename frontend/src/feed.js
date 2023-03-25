@@ -286,6 +286,13 @@ function renderEachPost(postInfo) {
 
   // implement a toggle to switch between hide and show
   numberOfLikes.addEventListener("click", () => {
+    const nbOfUsers = Number(numberOfLikes.textContent.split(" ")[1]);
+
+    // if no one like this post, we won't show like list
+    if (nbOfUsers === 0) {
+      return;
+    }
+
     if (likeUsers.classList.contains("Hidden")) {
       likeUsers.classList.remove("Hidden");
     } else {
@@ -305,6 +312,13 @@ function renderEachPost(postInfo) {
 
   // implement a toggle to switch between hide and show
   numberOfComments.addEventListener("click", () => {
+    const nbOfComments = Number(numberOfComments.textContent.split(" ")[1]);
+
+    // if no one comment this post, we won't show comments
+    if (nbOfComments === 0) {
+      return;
+    }
+
     if (commentContent.classList.contains("Hidden")) {
       commentContent.classList.remove("Hidden");
     } else {
@@ -348,7 +362,8 @@ function renderEachPost(postInfo) {
     numberOfLikes,
     likeUsers,
     numberOfComments,
-    commentContent
+    commentContent,
+    followers
   );
 
   // process every name in this post so that we can view their profile when we click their name
