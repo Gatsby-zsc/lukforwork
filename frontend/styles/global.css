@@ -1069,4 +1069,8 @@ a:active {
       "posts";
     column-gap: 22px;
   }
+
+  #real-profile {
+    margin: 120px auto;
+  }
 }
