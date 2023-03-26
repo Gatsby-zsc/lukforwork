@@ -13,15 +13,13 @@ body {
 
 #login {
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   background-color: #ffffff;
 }
 
 .LurkForWork-logo {
   margin-left: 56px;
   margin-top: 32px;
+  margin-bottom: 60px;
   color: #0a66c2;
   font-weight: bolder;
   font-size: 24px;
@@ -43,6 +41,10 @@ body {
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .Window {
@@ -111,6 +113,10 @@ body {
   align-items: center;
   margin-top: 10px;
   height: 40px;
+}
+
+#remember-me:hover {
+  cursor: pointer;
 }
 
 #remember-me {
@@ -305,7 +311,7 @@ a:active {
 #back-to-top {
   position: fixed;
   right: 20px;
-  bottom: 50px;
+  bottom: 300px;
   padding: 10px 10px;
   font-size: 12pt;
   border-radius: 10px;
@@ -1026,6 +1032,7 @@ a:active {
   }
 
   #homepage-content {
+    margin: 70px auto 0;
     width: 720px;
     display: grid;
     grid-template-columns: 300px auto;
@@ -1034,9 +1041,10 @@ a:active {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 760px) {
   #homepage-content {
-    width: 500px;
+    margin: 70px auto 0;
+    width: 90%;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
@@ -1050,8 +1058,9 @@ a:active {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 572px) {
   #homepage-content {
+    margin: 120px auto 0;
     width: 90%;
     display: grid;
     grid-template-columns: auto;
