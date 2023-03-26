@@ -345,11 +345,17 @@ a:active {
 
 #text-post {
   margin: 4px 0;
-  padding: 0 20px;
+  padding: 15px 20px;
   width: 80%;
-  height: 48px;
   border-radius: 30px;
   font-size: 20px;
+  border: 2px solid #0a66c2;
+  color: #757575;
+}
+
+#text-post:hover {
+  cursor: pointer;
+  background-color: #ebebeb;
 }
 
 .Post-select {

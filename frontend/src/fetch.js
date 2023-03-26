@@ -63,7 +63,7 @@ export function fetchPut(req, bodyInfo, err) {
           .classList.contains("Hidden")
       ) {
         errorPopup(
-          "follow user successfully!!! To view this, please refresh your homepage "
+          "follow user successfully!!! To view this, please open your profile "
         );
       } else if (req === "job" && res.status === 200) {
         errorPopup("Post modified successfully");

@@ -4,8 +4,8 @@ export function errorPopup(errorMessage = "error happens") {
   const errorBox = document.getElementById("error-box");
   errorBox.classList.remove("Hidden");
   const closeButton = document.getElementById("close-error-window");
+  // resume from error
   closeButton.addEventListener("click", () => {
     errorBox.classList.add("Hidden");
   });
-  // resume from error
 }
