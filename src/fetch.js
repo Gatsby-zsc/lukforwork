@@ -1,7 +1,7 @@
 import { errorPopup } from "./errorHandle.js";
 
 export function fetchPOST(req, bodyInfo, success, err) {
-  fetch("http://lukforwork.onrender.com/" + req, {
+  fetch("https://lukforwork.onrender.com/" + req, {
     method: "POST",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -22,7 +22,7 @@ export function fetchPOST(req, bodyInfo, success, err) {
 }
 
 export function fetchGET(req, success, err) {
-  fetch(`http://lukforwork.onrender.com/` + req, {
+  fetch(`https://lukforwork.onrender.com/` + req, {
     method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
@@ -43,7 +43,7 @@ export function fetchGET(req, success, err) {
 }
 
 export function fetchPut(req, bodyInfo, err) {
-  fetch(`http://lukforwork.onrender.com/` + req, {
+  fetch(`https://lukforwork.onrender.com/` + req, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export function fetchPut(req, bodyInfo, err) {
 
 // function of make a post or comment into server
 export function fetchPost(req, postDetail) {
-  fetch("http://lukforwork.onrender.com/" + req, {
+  fetch("https://lukforwork.onrender.com/" + req, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export function fetchPost(req, postDetail) {
 }
 
 export function fetchDelete(req, postId) {
-  fetch("http://lukforwork.onrender.com/" + req, {
+  fetch("https://lukforwork.onrender.com/" + req, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
